@@ -1,0 +1,200 @@
+
+.btn-surprise-me {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(180deg, #E0937A 0%, #C86D51 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(200, 109, 81, 0.3);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+.btn-surprise-me:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 14px rgba(200, 109, 81, 0.4);
+}
+
+.btn-surprise-me:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.surprise-family-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-primary-subtle);
+  border: 1px solid rgba(200, 109, 81, 0.2);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.surprise-family-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.surprise-family-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.surprise-family-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-charcoal);
+}
+
+.surprise-family-tagline {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-charcoal-muted);
+}
+
+.surprise-items-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.surprise-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--surface-panel);
+  border: 1px solid var(--surface-panel-border);
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease;
+}
+
+.surprise-item-row:hover {
+  background: var(--surface-ground);
+  border-color: var(--color-primary-subtle);
+}
+
+.surprise-item-label-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.surprise-item-icon {
+  font-size: 14px;
+}
+
+.surprise-item-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-charcoal-muted);
+  min-width: 80px;
+}
+
+.surprise-item-val {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-charcoal);
+}
+
+.surprise-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-lock-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--surface-panel-border);
+  background: var(--surface-ground);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-charcoal-subtle);
+}
+
+.btn-lock-toggle.locked {
+  background: #FFE8E1;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 700;
+  box-shadow: 0 0 8px rgba(200, 109, 81, 0.2);
+}
+
+.btn-lock-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--color-primary);
+}
+
+.btn-reroll-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--surface-panel-border);
+  background: var(--surface-ground);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-charcoal-muted);
+}
+
+.btn-reroll-item:hover {
+  transform: rotate(180deg) scale(1.1);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.surprise-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.surprise-footer-right {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .surprise-item-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .surprise-actions-group {
+    align-self: flex-end;
+  }
+  .surprise-footer-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .surprise-footer-right {
+    width: 100%;
+  }
+  .surprise-footer-right button {
+    flex: 1;
+  }
+}

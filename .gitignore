@@ -1,0 +1,11 @@
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+
+# IDE & Environment
+.vscode/
+.idea/
+.system_generated/

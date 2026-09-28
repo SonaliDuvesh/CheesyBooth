@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Say Cheese - Offline</title>
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <style>
+    :root {
+      --color-cream-bg: #FAF6EE;
+      --color-charcoal-main: #292724;
+      --color-charcoal-subtle: #8C827A;
+      --color-primary: #E0937A;
+      --color-primary-dark: #C86D51;
+      --color-cream-border: #E4DCCF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--color-cream-bg);
+      color: var(--color-charcoal-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .offline-card {
+      background: #FFFFFF;
+      border: 1px solid var(--color-cream-border);
+      border-radius: 24px;
+      padding: 40px 32px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 16px 40px rgba(41, 39, 36, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .offline-icon {
+      font-size: 48px;
+      background: rgba(224, 147, 122, 0.15);
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--color-charcoal-subtle);
+      line-height: 1.5;
+    }
+
+    .btn-return {
+      margin-top: 8px;
+      background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(200, 109, 81, 0.3);
+      transition: all 0.18s ease;
+    }
+
+    .btn-return:hover {
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 18px rgba(200, 109, 81, 0.4);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="offline-card">
+    <div class="offline-icon">📶</div>
+    <h1>You're Offline</h1>
+    <p>
+      No internet connection detected, but Say Cheese is ready! Your saved photos, camera features, collages, and prints
+      remain safely available on your device.
+    </p>
+    <a href="./" class="btn-return">Open Say Cheese</a>
+  </div>
+
+  <script>
+    window.addEventListener('online', () => {
+      window.location.href = './';
+    });
+  </script>
+</body>
+
+</html>

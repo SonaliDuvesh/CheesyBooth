@@ -1,0 +1,76 @@
+{
+  "name": "CheesyBooth",
+  "short_name": "CheesyBooth",
+  "description": "CheesyBooth photobooth studio for capturing, styling, and printing instant photos and collages.",
+  "start_url": "./",
+  "scope": "./",
+  "id": "say-cheese-pwa",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "orientation": "any",
+  "theme_color": "#FAF6EE",
+  "background_color": "#FAF6EE",
+  "categories": [
+    "photo",
+    "lifestyle",
+    "entertainment",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Take Photo",
+      "short_name": "Capture",
+      "description": "Launch the photobooth camera",
+      "url": "./",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Collage Studio",
+      "short_name": "Collage",
+      "description": "Customize photobooth layouts & prints",
+      "url": "./#collage",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="CheesyBooth" />
+  <meta name="theme-color" content="#FAF6EE" />
+  <title>CheesyBooth - Cozy Cute Camera Photobooth</title>
+  <meta name="description"
+    content="CheesyBooth is a warm, tactile pocket photobooth to capture multi-photo sessions and build customized printed photo strips." />
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data: https: http:; media-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net; worker-src 'self' blob: https://cdn.jsdelivr.net;" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Permissions-Policy" content="camera=(self), microphone=(self), geolocation=()" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/background.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/booth.css" />
+  <link rel="stylesheet" href="css/review.css" />
+  <link rel="stylesheet" href="css/collage.css" />
+  <link rel="stylesheet" href="css/personalization.css" />
+  <link rel="stylesheet" href="css/modes.css" />
+  <link rel="stylesheet" href="css/randomizer.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+  <link rel="stylesheet" href="css/accessibility.css" />
+  <link rel="stylesheet" href="css/privacy.css" />
+  <link rel="stylesheet" href="css/recovery.css" />
+  <link rel="stylesheet" href="css/export.css" />
+  <link rel="stylesheet" href="css/print.css" />
+</head>
+
+<body>
+
+  <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+  <div id="a11yAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="ambient-background" aria-hidden="true">
+    <div class="organic-shape shape-1"></div>
+    <div class="organic-shape shape-2"></div>
+    <div class="organic-shape shape-3"></div>
+    <div class="organic-shape shape-4"></div>
+  </div>
+
+  <div id="flashLayer" class="flash-layer" aria-hidden="true"></div>
+
+  <main id="mainContent" class="app-wrapper">
+
+    <header class="app-header">
+      <div class="brand-section">
+        <h1 class="brand-logo">
+          <span class="accent-star">✦</span>
+          <span id="headerBrandTitle">CHEESYBOOTH</span>
+        </h1>
+        <span class="brand-tag" id="headerBrandTag">cheesy booth · v1.0</span>
+      </div>
+
+      <div class="header-center" style="display:flex; align-items:center; gap:8px;">
+        <div id="statusBadge" class="status-badge">
+          <span id="statusDot" class="status-dot"></span>
+          <span id="statusText">READY</span>
+        </div>
+        <div id="autosaveBadge" class="autosave-badge" title="Local autosave status">
+          <span id="autosaveDot" class="autosave-dot"></span>
+          <span id="autosaveText">Saved</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btnPlanSession" class="btn-surprise-me"
+          style="background:var(--surface-card); border-color:var(--color-primary-light); color:var(--color-primary);"
+          title="Plan a curated photobooth session with AI">
+          <span>✨</span>
+          <span>Plan Session</span>
+        </button>
+        <button id="btnSurpriseMe" class="btn-surprise-me" title="Generate an intelligent, curated surprise setup">
+          <span>🎲</span>
+          <span>Surprise Me</span>
+        </button>
+        <button id="btnOpenProjects" class="icon-btn" title="Saved Projects & Backups" aria-label="Saved Projects">
+          <span>📁</span>
+        </button>
+        <button id="btnOpenPreferences" class="icon-btn" title="Customize Booth & Preferences" aria-label="Preferences">
+          <span>⚙️</span>
+        </button>
+        <button id="btnKeyboardHelp" class="icon-btn" title="Keyboard Shortcuts (?)" aria-label="Keyboard Shortcuts">
+          <span>⌨️</span>
+        </button>
+        <button id="btnSoundToggle" class="icon-btn" title="Toggle Sound Effects" aria-label="Toggle Sound">
+          <span id="soundIcon">🔊</span>
+        </button>
+        <button id="btnSwitchCamera" class="icon-btn" title="Switch Camera" aria-label="Flip Camera">
+          <span>🔄</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="stage-container">
+
+      <section id="boothSection" class="view-section active">
+
+        <aside class="booth-left-dock" id="boothLeftDock">
+
+          <div id="welcomeBanner" class="welcome-banner" style="display:none;">
+            <div class="welcome-info">
+              <span id="welcomeGreetingText" class="welcome-greeting">Welcome back ✦</span>
+              <span id="welcomeSubtext" class="welcome-subtext">4 photos · 5s countdown · Warm Vintage</span>
+            </div>
+            <button id="btnApplyLastSetup" class="btn-use-last-setup" title="Load your previous session's settings">
+              <span>↺</span> Use Last Setup
+            </button>
+          </div>
+
+          <div class="modes-bar-wrapper">
+            <div class="modes-bar-header">
+              <span class="modes-bar-title">✨ Fun Modes</span>
+              <span id="activeModeEnergyBadge" class="mode-energy-tag">Relaxed</span>
+            </div>
+
+            <div class="modes-scroll-container" id="funModesScroll">
+
+            </div>
+
+            <div id="activeModeBanner" class="active-mode-banner">
+              <span id="activeModeDesc" class="active-mode-desc">🪵 Classic cozy photobooth experience with your
+                preferred settings.</span>
+              <span id="activeModeSuggest" class="active-mode-suggest">Suggested: 5s</span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="booth-console">
+
+          <span class="console-stud tl" aria-hidden="true"></span>
+          <span class="console-stud tr" aria-hidden="true"></span>
+          <span class="console-stud bl" aria-hidden="true"></span>
+          <span class="console-stud br" aria-hidden="true"></span>
+
+          <div class="console-top-strip">
+            <div class="session-meter">
+              <span id="sessionCounterText" class="session-label">PHOTO 01 / 04</span>
+              <div id="meterDots" class="meter-dots">
+                <span class="meter-dot current"></span>
+                <span class="meter-dot"></span>
+                <span class="meter-dot"></span>
+                <span class="meter-dot"></span>
+              </div>
+            </div>
+            <span class="control-label" id="retakeModeLabel" style="display:none; color:var(--color-primary);">RETAKE
+              MODE</span>
+          </div>
+
+          <div class="filter-tray" id="filterTray">
+            <button class="filter-chip active" data-filter="warm-vintage" title="Soft warmth + faded film">Warm
+              Vintage</button>
+            <button class="filter-chip" data-filter="disposable"
+              title="Flashy, grainy 90s disposable">Disposable</button>
+            <button class="filter-chip" data-filter="film-35mm" title="Rich shadows & analog 35mm">35mm Film</button>
+            <button class="filter-chip" data-filter="digicam"
+              title="Early-2000s cyber digital vibrancy">Digicam</button>
+            <button class="filter-chip" data-filter="golden-hour" title="Luminous sunset amber glow">Golden
+              Hour</button>
+            <button class="filter-chip" data-filter="dreamy" title="Soft light & gentle bloom">Dreamy</button>
+            <button class="filter-chip" data-filter="soft-glow" title="Flattering luminous contrast">Soft Glow</button>
+            <button class="filter-chip" data-filter="nostalgia-90s" title="Retro yellow-green vintage tint">90s
+              Nostalgia</button>
+            <button class="filter-chip" data-filter="classic-bw" title="Timeless high-contrast B&W">Classic B&W</button>
+            <button class="filter-chip" data-filter="faded-bw" title="Soft matte faded noir">Faded Noir</button>
+            <button class="filter-chip" data-filter="pastel-peach" title="Soft coral blush tones">Pastel Peach</button>
+            <button class="filter-chip" data-filter="original" title="Natural crisp capture">Original</button>
+          </div>
+
+          <div class="viewfinder-wrapper" id="viewfinderWrapper">
+            <video id="cameraVideo" class="camera-video" playsinline autoplay muted></video>
+
+            <div class="viewfinder-overlay">
+              <div class="hud-corners">
+                <span class="hud-corner tl"></span>
+                <span class="hud-corner tr"></span>
+                <span class="hud-corner bl"></span>
+                <span class="hud-corner br"></span>
+              </div>
+
+              <div class="viewfinder-top">
+                <div class="rec-badge">
+                  <span class="rec-dot"></span>
+                  <span>LIVE</span>
+                </div>
+                <div id="cameraPrivacyBadge" class="privacy-badge" title="Camera status and local privacy">
+                  <span id="cameraPrivacyDot" class="privacy-dot"></span>
+                  <span id="cameraPrivacyText">Camera Active</span>
+                </div>
+                <div id="activeModeBadge" class="viewfinder-mode-badge" style="display:none;">🪵 CLASSIC</div>
+                <div id="cameraZoomBadge" class="viewfinder-mode-badge" style="display:none;">🔍 1.0×</div>
+                <div id="activeFilterBadge" class="filter-badge">WARM VINTAGE</div>
+              </div>
+            </div>
+
+            <div id="liveZoomIndicator" class="live-zoom-indicator" style="display:none;" aria-live="polite">
+              <span id="liveZoomIndicatorText">🔍 1.0× ZOOM</span>
+            </div>
+
+            <div id="posePromptBanner" class="pose-prompt-banner" style="display:none;" aria-live="polite">
+              <span class="pose-prompt-icon">💡</span>
+              <span id="posePromptText" class="pose-prompt-text">Look at the camera 👀</span>
+            </div>
+
+            <div id="voiceModeOverlay" class="voice-mode-overlay" style="display:none;" aria-live="polite">
+              <div class="voice-mic-badge">
+                <div class="voice-mic-pulse"></div>
+                <svg class="voice-mic-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z" />
+                </svg>
+              </div>
+              <div class="voice-hud-content">
+                <span class="voice-hud-title" id="voiceHudTitle">Say "Say Cheese" 📸</span>
+                <span class="voice-hud-progress" id="voiceHudProgress">Shot 1 of 4</span>
+              </div>
+            </div>
+
+            <div id="countdownOverlay" class="countdown-overlay">
+              <span id="countdownNumber" class="countdown-number">3</span>
+              <span class="countdown-message" id="countdownMessage">Get Ready! Smile ✨</span>
+            </div>
+
+            <div id="cameraConsentOverlay" class="camera-consent-overlay" style="display:none;">
+              <span class="consent-card-icon">📷✨</span>
+              <p class="consent-card-intro-text">
+                Okay, enough posing in your head.<br />
+                You look suspiciously photogenic.<br />
+                Lights. Camera. YOU.<br />
+                Say Cheese.
+              </p>
+              <div class="consent-actions-group" style="margin-bottom: 0;">
+                <button id="btnAllowCamera" class="btn-shutter" style="padding:10px 22px; font-size:13px;">
+                  <span>✨</span> Allow Camera
+                </button>
+              </div>
+            </div>
+
+            <div id="cameraBlockedOverlay" class="camera-blocked-overlay" style="display:none;">
+              <span class="blocked-card-icon">🔒</span>
+              <h3 class="blocked-card-title">Camera Access is Blocked</h3>
+              <p class="blocked-card-desc" id="cameraBlockedReason">
+                Your browser is blocking camera access for this page.
+              </p>
+              <div class="blocked-instructions">
+                <div class="blocked-instructions-step"><span>1.</span> Tap the 🔒 lock icon in your address bar</div>
+                <div class="blocked-instructions-step"><span>2.</span> Set <strong>Camera</strong> permission to
+                  <strong>Allow</strong></div>
+                <div class="blocked-instructions-step"><span>3.</span> Click <strong>Retry Camera</strong> below</div>
+              </div>
+              <div class="consent-actions-group">
+                <button id="btnRetryCameraBlocked" class="btn-shutter" style="padding:8px 18px; font-size:12px;">
+                  <span>↻</span> Retry Camera
+                </button>
+              </div>
+            </div>
+
+            <div id="cameraFallbackMsg" class="camera-fallback-msg" style="display:none;">
+              <h4>Camera Access</h4>
+              <p id="cameraFallbackDesc">Click below to allow camera access.</p>
+              <button id="btnRetryCamera" class="btn-secondary">Enable Camera</button>
+            </div>
+          </div>
+
+          <div class="console-controls">
+
+            <div class="session-config-pills">
+              <span class="control-label">Target Shots</span>
+              <div class="pill-group" id="targetCountGroup">
+                <button class="pill-btn" data-count="2">2</button>
+                <button class="pill-btn active" data-count="4">4</button>
+                <button class="pill-btn" data-count="6">6</button>
+                <button class="pill-btn" data-count="custom" id="btnCustomTargetShots"
+                  title="Set custom number of photos">+</button>
+              </div>
+            </div>
+
+            <div class="session-config-pills">
+              <span class="control-label">Countdown</span>
+              <div class="pill-group" id="countdownSecGroup">
+                <button class="pill-btn" data-seconds="3">3s</button>
+                <button class="pill-btn active" data-seconds="5">5s</button>
+                <button class="pill-btn" data-seconds="10">10s</button>
+                <button class="pill-btn" data-seconds="custom" id="btnCustomCountdown"
+                  title="Set custom countdown timer">+</button>
+              </div>
+            </div>
+
+            <div class="session-config-pills shutter-config-group">
+              <span class="control-label">Camera / Voice</span>
+              <div class="shutter-housing shutter-split-housing">
+                <div class="shutter-split-btn-group" role="group" aria-label="Start Booth Session Mode">
+                  <button id="btnShutterCamera" class="btn-shutter btn-shutter-split btn-shutter-camera"
+                    title="Start Session with Camera (or press Space)" aria-label="Start Camera Session">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="3.2" />
+                      <path
+                        d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" />
+                    </svg>
+                    <span id="shutterCameraBtnText" class="sr-only">CAMERA</span>
+                  </button>
+                  <button id="btnShutterVoice" class="btn-shutter btn-shutter-split btn-shutter-voice"
+                    title="Start Session with Voice ('Say Cheese')" aria-label="Start Voice Session">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z" />
+                    </svg>
+                    <span id="shutterVoiceBtnText" class="sr-only">VOICE</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="session-config-pills" id="zoomConfigGroup">
+              <span class="control-label">Zoom</span>
+              <div class="pill-group" id="cameraZoomGroup">
+                <button type="button" class="pill-btn" id="btnZoomOut" title="Zoom Out (−)" aria-label="Zoom Out">−</button>
+                <span class="zoom-level-text" id="zoomLevelText" title="Current Zoom Level">1.0×</span>
+                <button type="button" class="pill-btn" id="btnZoomIn" title="Zoom In (+)" aria-label="Zoom In">+</button>
+              </div>
+            </div>
+
+            <div class="session-config-pills" id="uploadConfigGroup">
+              <span class="control-label">Upload</span>
+              <div class="pill-group">
+                <input type="file" id="uploadPhotosInput" accept="image/*,.png,.jpg,.jpeg,.webp,.avif,.heic" multiple style="display:none;" />
+                <button type="button" class="pill-btn btn-upload-pill" id="btnUploadPhotos" title="Upload your own photos from your device" aria-label="Upload Photos">
+                  <span>📁</span>
+                  <span>Upload</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="session-config-pills">
+              <span class="control-label">Pose Prompts</span>
+              <div class="pill-group" id="posePromptGroup">
+                <button class="pill-btn active" data-mode="on">ON</button>
+                <button class="pill-btn" data-mode="off">OFF</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="side-strip-dock" id="sideStripDock" aria-label="Session photos taken">
+            <div class="side-photo-slot" id="sideSlot0"></div>
+            <div class="side-photo-slot" id="sideSlot1"></div>
+            <div class="side-photo-slot" id="sideSlot2"></div>
+            <div class="side-photo-slot" id="sideSlot3"></div>
+            <div class="side-strip-footer">SNAP PREVIEW</div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="reviewSection" class="view-section">
+        <div class="review-container">
+          <div class="section-header">
+            <h2 class="section-title">Review Your Photos 📸</h2>
+            <p class="section-subtitle" id="reviewSubtitle">Retake any photo, delete unwanted shots, or reorder before
+              building your strip.</p>
+          </div>
+
+          <div id="sessionSummaryCard" class="session-summary-card" style="display:none;">
+            <div class="summary-left">
+              <div class="summary-icon-bubble" id="summaryModeIcon">🎭</div>
+              <div class="summary-details">
+                <span class="summary-mode-title" id="summaryModeTitle">Pose Challenge Session</span>
+                <span class="summary-mode-stats" id="summaryModeStats">4 photos · 4 unique poses · 5s countdown</span>
+              </div>
+            </div>
+            <span class="summary-badge" id="summaryBadge">Challenge Completed</span>
+          </div>
+
+          <div id="photoDeskGrid" class="photo-desk-grid">
+
+          </div>
+
+          <div class="review-nav-bar">
+            <div style="display:flex; gap:8px; align-items:center;">
+              <button id="btnRestartSession" class="btn-secondary">
+                <span>↺</span> Restart Session
+              </button>
+              <button id="btnReviewUndo" class="btn-history" title="Undo photo action (Ctrl+Z / ⌘Z)"
+                aria-label="Undo photo action" disabled>
+                <span>↶</span> Undo
+              </button>
+              <button id="btnReviewRedo" class="btn-history"
+                title="Redo photo action (Ctrl+Shift+Z / ⌘Shift+Z / Ctrl+Y)" aria-label="Redo photo action" disabled>
+                <span>↷</span> Redo
+              </button>
+            </div>
+            <button id="btnProceedToCollage" class="btn-shutter">
+              <span>Create Collage Strip →</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="collageSection" class="view-section">
+        <div class="collage-studio-container">
+
+          <div class="collage-preview-stage">
+            <div class="collage-canvas-wrapper">
+              <div class="collage-canvas-container" id="canvasContainer">
+                <canvas id="collageCanvas"></canvas>
+                <div class="collage-slot-overlay-container" id="slotOverlayContainer"></div>
+                <div class="canvas-stickers-layer" id="canvasStickersLayer" aria-label="Interactive Stamps Layer"></div>
+              </div>
+            </div>
+            <p
+              style="font-family: var(--font-mono); font-size: 11px; color: var(--color-charcoal-subtle); text-align: center;">
+              💡 Tip: Click photo slots to crop/zoom/rotate; drag & drop stamps anywhere!
+            </p>
+
+            <div class="collage-stage-export-panel" id="collageStageExportPanel">
+              <div class="stage-export-header">
+                <span class="stage-export-title">💾 Export & Print Strip</span>
+              </div>
+              <div class="stage-export-grid">
+                <button id="btnOpenExportStudio" class="btn-export-studio-trigger"
+                  title="Open Advanced Export Studio (Ctrl+E)">
+                  <span>🚀 Advanced Export Studio...</span>
+                  <kbd
+                    style="font-size:10px; opacity:0.8; padding:2px 5px; border-radius:4px; background:rgba(0,0,0,0.2);">Ctrl+E</kbd>
+                </button>
+                <button id="btnOpenPrintStudio" class="btn-print-studio-trigger"
+                  title="Open Real-World Print Studio (Ctrl+P)">
+                  <span>🖨️ Prepare for Print (300 DPI)...</span>
+                  <kbd
+                    style="font-size:10px; opacity:0.8; padding:2px 5px; border-radius:4px; background:rgba(0,0,0,0.08);">Ctrl+P</kbd>
+                </button>
+                <button id="btnMobileShare" class="btn-mobile-share"
+                  style="width:100%; display:none; justify-content:center; padding: 12px; font-size: 13px;">
+                  <span>📲 Share Print (iOS & Android)</span>
+                </button>
+                <button id="btnDownloadGIF" class="btn-export-studio-trigger"
+                  style="width:100%; justify-content:center;">
+                  <span>🎞️ Quick Animated GIF (.gif)</span>
+                </button>
+                <button id="btnDownloadPNG" class="btn-secondary"
+                  style="width:100%; justify-content:center; font-weight:700;">
+                  <span>🖼️ Quick Still PNG (.png)</span>
+                </button>
+                <button id="btnSaveProject" class="btn-secondary"
+                  style="width:100%; justify-content:center; font-weight:600;">
+                  <span>💾 Save Print to Projects</span>
+                </button>
+                <div class="stage-export-actions-row" style="display:flex; gap:6px; width:100%;">
+                  <button id="btnCopyImage" class="btn-secondary" style="flex:1;">
+                    <span>📋</span> Copy
+                  </button>
+                  <button id="btnBackToReview" class="btn-secondary" style="flex:1;">
+                    <span>←</span> Back
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="collage-workbench">
+            <div class="section-header"
+              style="align-items: flex-start; text-align: left; flex-direction: row; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <h2 class="section-title" style="font-size: 22px;">Customize Strip</h2>
+                <p class="section-subtitle">Pick layouts, style presets, framing, and slot crops.</p>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <button id="btnSurpriseCollage" class="btn-history"
+                  style="font-size: 11px; padding: 5px 10px; font-weight: 700; background: var(--surface-card); border-color: var(--color-primary);"
+                  title="Surprise Me with an aesthetic layout and styling combination">
+                  🎲 Surprise Print
+                </button>
+                <div class="history-controls-toolbar">
+                  <button id="btnUndo" class="btn-history" title="Undo (Ctrl+Z / ⌘Z)" aria-label="Undo last edit"
+                    disabled>
+                    <span>↶</span> Undo
+                  </button>
+                  <button id="btnRedo" class="btn-history" title="Redo (Ctrl+Shift+Z / ⌘Shift+Z / Ctrl+Y)"
+                    aria-label="Redo last edit" disabled>
+                    <span>↷</span> Redo
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="collage-accordion" id="collageAccordion" role="presentation">
+
+              <div class="accordion-item active" id="accItem_layout">
+                <button type="button" class="accordion-header" id="accHeader_layout" aria-expanded="true"
+                  aria-controls="accContent_layout" data-section="layout">
+                  <div class="accordion-title-wrap">
+                    <span class="accordion-icon">📐</span>
+                    <span class="accordion-title">Layout Architecture</span>
+                  </div>
+                  <div class="accordion-meta-wrap">
+                    <span class="accordion-summary" id="accSummary_layout">Classic Booth · 4-Strip</span>
+                    <span class="accordion-chevron" aria-hidden="true">▼</span>
+                  </div>
+                </button>
+                <div class="accordion-body" id="accContent_layout" role="region" aria-labelledby="accHeader_layout">
+
+                  <div class="workbench-section" style="margin-bottom: 14px;">
+                    <span class="workbench-title">Curated Style Presets</span>
+                    <div class="preset-styles-ribbon" id="presetStylesRibbon">
+                      <button class="preset-style-card active" data-preset="classic-booth"
+                        title="Classic warm photobooth strip">
+                        <span class="preset-icon">🎞️</span>
+                        <span class="preset-name">Classic Booth</span>
+                      </button>
+                      <button class="preset-style-card" data-preset="vintage-film"
+                        title="35mm Cinema frame with sprockets">
+                        <span class="preset-icon">🎬</span>
+                        <span class="preset-name">Vintage 35mm</span>
+                      </button>
+                      <button class="preset-style-card" data-preset="soft-memory"
+                        title="Oatmeal paper with soft rounded corners">
+                        <span class="preset-icon">🌸</span>
+                        <span class="preset-name">Soft Memory</span>
+                      </button>
+                      <button class="preset-style-card" data-preset="90s-nostalgia"
+                        title="Peach tone 90s disposable flash">
+                        <span class="preset-icon">📸</span>
+                        <span class="preset-name">90s Disposable</span>
+                      </button>
+                      <button class="preset-style-card" data-preset="minimal-editorial"
+                        title="High contrast monochrome duo with antique borders">
+                        <span class="preset-icon">📰</span>
+                        <span class="preset-name">Editorial Mono</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="workbench-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <span class="workbench-title">Layout Architecture</span>
+                    </div>
+
+                    <div class="layout-category-tabs" id="layoutCategoryTabs">
+                      <button class="layout-cat-btn active" data-cat="all">All</button>
+                      <button class="layout-cat-btn" data-cat="classic">Classic 🎞️</button>
+                      <button class="layout-cat-btn" data-cat="shapes">Shapes 💖</button>
+                      <button class="layout-cat-btn" data-cat="film">Film 🎬</button>
+                      <button class="layout-cat-btn" data-cat="editorial">Editorial 📰</button>
+                      <button class="layout-cat-btn" data-cat="minimal">Minimal ◻️</button>
+                      <button class="layout-cat-btn" data-cat="fun">Fun ✨</button>
+                    </div>
+
+                    <div class="layout-grid" id="layoutPicker">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item" id="accItem_dimensions">
+                <button type="button" class="accordion-header" id="accHeader_dimensions" aria-expanded="false"
+                  aria-controls="accContent_dimensions" data-section="dimensions">
+                  <div class="accordion-title-wrap">
+                    <span class="accordion-icon">📏</span>
+                    <span class="accordion-title">Aspect Ratio & Spacing</span>
+                  </div>
+                  <div class="accordion-meta-wrap">
+                    <span class="accordion-summary" id="accSummary_dimensions">Strip · 16px gap · 24px pad</span>
+                    <span class="accordion-chevron" aria-hidden="true">▶</span>
+                  </div>
+                </button>
+                <div class="accordion-body" id="accContent_dimensions" role="region"
+                  aria-labelledby="accHeader_dimensions" hidden>
+
+                  <div class="workbench-section" style="margin-bottom: 14px;">
+                    <span class="workbench-title">Aspect Ratio / Print Format</span>
+                    <div class="pill-group aspect-pill-group" id="aspectRatioGroup">
+                      <button class="pill-btn active" data-aspect="strip">Strip</button>
+                      <button class="pill-btn" data-aspect="1:1">1:1 Square</button>
+                      <button class="pill-btn" data-aspect="4:5">4:5 Portrait</button>
+                      <button class="pill-btn" data-aspect="3:4">3:4 Story</button>
+                      <button class="pill-btn" data-aspect="4:3">4:3 Landscape</button>
+                      <button class="pill-btn" data-aspect="16:9">16:9 Cinema</button>
+                    </div>
+                  </div>
+
+                  <div class="workbench-section">
+                    <div style="display: flex; justify-content: space-between;">
+                      <span class="workbench-title">Photo Spacing (Gap)</span>
+                      <span id="spacingValText" style="font-family: var(--font-mono); font-size: 11px;">16px</span>
+                    </div>
+                    <input type="range" id="spacingSlider" class="tactile-slider" min="4" max="48" value="16" />
+
+                    <div style="display: flex; justify-content: space-between; margin-top: 6px;">
+                      <span class="workbench-title">Outer Margin (Padding)</span>
+                      <span id="paddingValText" style="font-family: var(--font-mono); font-size: 11px;">24px</span>
+                    </div>
+                    <input type="range" id="paddingSlider" class="tactile-slider" min="0" max="60" value="24" />
+
+                    <div style="display: flex; justify-content: space-between; margin-top: 6px;">
+                      <span class="workbench-title">Corner Roundness</span>
+                      <span id="borderRadiusValText" style="font-family: var(--font-mono); font-size: 11px;">8px</span>
+                    </div>
+                    <input type="range" id="borderRadiusSlider" class="tactile-slider" min="0" max="32" value="8" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item" id="accItem_frame">
+                <button type="button" class="accordion-header" id="accHeader_frame" aria-expanded="false"
+                  aria-controls="accContent_frame" data-section="frame">
+                  <div class="accordion-title-wrap">
+                    <span class="accordion-icon">🎨</span>
+                    <span class="accordion-title">Frame & Paper Style</span>
+                  </div>
+                  <div class="accordion-meta-wrap">
+                    <span class="accordion-summary" id="accSummary_frame">Clean · Ivory Cream</span>
+                    <span class="accordion-chevron" aria-hidden="true">▶</span>
+                  </div>
+                </button>
+                <div class="accordion-body" id="accContent_frame" role="region" aria-labelledby="accHeader_frame"
+                  hidden>
+
+                  <div class="workbench-section" style="margin-bottom: 14px;">
+                    <span class="workbench-title">Frame Style</span>
+                    <div class="pill-group" id="frameStyleGroup">
+                      <button class="pill-btn active" data-style="clean">Clean</button>
+                      <button class="pill-btn" data-style="film">Film 35mm</button>
+                      <button class="pill-btn" data-style="polaroid">Polaroid</button>
+                      <button class="pill-btn" data-style="vintage">Vintage Line</button>
+                      <button class="pill-btn" data-style="rounded">Soft Rounded</button>
+                    </div>
+                  </div>
+
+                  <div class="workbench-section" style="margin-bottom: 14px;">
+                    <span class="workbench-title">Photo Cutout Shape</span>
+                    <div class="pill-group" id="photoShapeGroup">
+                      <button class="pill-btn active" data-shape="rounded">▢ Rounded</button>
+                      <button class="pill-btn" data-shape="rectangle">◻️ Rectangle</button>
+                      <button class="pill-btn" data-shape="square">◼️ Square</button>
+                      <button class="pill-btn" data-shape="circle">⚪ Circle</button>
+                      <button class="pill-btn" data-shape="ellipse">⬭ Ellipse</button>
+                      <button class="pill-btn" data-shape="heart">💖 Heart</button>
+                      <button class="pill-btn" data-shape="star">⭐ Star</button>
+                      <button class="pill-btn" data-shape="arch">🏛️ Arch</button>
+                      <button class="pill-btn" data-shape="diamond">💎 Diamond</button>
+                    </div>
+                  </div>
+
+                  <div class="workbench-section">
+                    <span class="workbench-title">Frame Paper Color</span>
+                    <div class="color-swatches" id="colorSwatches">
+                      <div class="color-swatch active" style="background:#FAF6EE;" data-color="#FAF6EE"
+                        data-text="#292724" title="Ivory Cream"></div>
+                      <div class="color-swatch" style="background:#EFE5D5;" data-color="#EFE5D5" data-text="#292724"
+                        title="Warm Oatmeal"></div>
+                      <div class="color-swatch" style="background:#F4DDD4;" data-color="#F4DDD4" data-text="#5A2E20"
+                        title="Dusty Peach"></div>
+                      <div class="color-swatch" style="background:#E2E8DC;" data-color="#E2E8DC" data-text="#2E3824"
+                        title="Muted Sage"></div>
+                      <div class="color-swatch" style="background:#C86D51;" data-color="#C86D51" data-text="#FFFFFF"
+                        title="Baked Terracotta"></div>
+                      <div class="color-swatch dark" style="background:#292724;" data-color="#292724"
+                        data-text="#FFFFFF" title="Vintage Noir"></div>
+
+                      <label class="custom-color-swatch-label" title="Choose custom paper color">
+                        <input type="color" id="customColorPicker" value="#FAF6EE" class="custom-color-input" />
+                        <span class="color-picker-icon">🎨</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item" id="accItem_filter">
+                <button type="button" class="accordion-header" id="accHeader_filter" aria-expanded="false"
+                  aria-controls="accContent_filter" data-section="filter">
+                  <div class="accordion-title-wrap">
+                    <span class="accordion-icon">🎞️</span>
+                    <span class="accordion-title">Analog Film Filters</span>
+                  </div>
+                  <div class="accordion-meta-wrap">
+                    <span class="accordion-summary" id="accSummary_filter">Warm Vintage · 80%</span>
+                    <span class="accordion-chevron" aria-hidden="true">▶</span>
+                  </div>
+                </button>
+                <div class="accordion-body" id="accContent_filter" role="region" aria-labelledby="accHeader_filter"
+                  hidden>
+                  <div class="workbench-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <span class="workbench-title">Global Analog Film Filter</span>
+                      <button id="btnSurpriseFilter" class="btn-history" style="font-size: 11px; padding: 3px 8px;"
+                        title="Surprise Me with a random vintage filter">🎲 Surprise Me</button>
+                    </div>
+                    <div class="filter-tray" id="collageFilterTray" style="padding: 4px 0; margin-bottom: 4px;">
+                      <button class="filter-chip active" data-filter="warm-vintage"
+                        title="Soft warmth + faded film">Warm Vintage</button>
+                      <button class="filter-chip" data-filter="disposable"
+                        title="Flashy, grainy 90s disposable">Disposable</button>
+                      <button class="filter-chip" data-filter="film-35mm" title="Rich shadows & analog 35mm">35mm
+                        Film</button>
+                      <button class="filter-chip" data-filter="digicam"
+                        title="Early-2000s cyber digital vibrancy">Digicam</button>
+                      <button class="filter-chip" data-filter="golden-hour" title="Luminous sunset amber glow">Golden
+                        Hour</button>
+                      <button class="filter-chip" data-filter="dreamy" title="Soft light & gentle bloom">Dreamy</button>
+                      <button class="filter-chip" data-filter="soft-glow" title="Flattering luminous contrast">Soft
+                        Glow</button>
+                      <button class="filter-chip" data-filter="nostalgia-90s"
+                        title="Retro yellow-green vintage tint">90s Nostalgia</button>
+                      <button class="filter-chip" data-filter="classic-bw" title="Timeless high-contrast B&W">Classic
+                        B&W</button>
+                      <button class="filter-chip" data-filter="faded-bw" title="Soft matte faded noir">Faded
+                        Noir</button>
+                      <button class="filter-chip" data-filter="pastel-peach" title="Soft coral blush tones">Pastel
+                        Peach</button>
+                      <button class="filter-chip" data-filter="original" title="Natural crisp capture">Original</button>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 6px;">
+                      <span
+                        style="font-family: var(--font-mono); font-size: 11px; color: var(--color-charcoal-muted);">Filter
+                        Intensity</span>
+                      <span id="filterIntensityValText"
+                        style="font-family: var(--font-mono); font-size: 11px; font-weight: 700;">80%</span>
+                    </div>
+                    <input type="range" id="filterIntensitySlider" class="tactile-slider" min="0" max="100"
+                      value="80" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item" id="accItem_slot">
+                <button type="button" class="accordion-header" id="accHeader_slot" aria-expanded="false"
+                  aria-controls="accContent_slot" data-section="slot">
+                  <div class="accordion-title-wrap">
+                    <span class="accordion-icon">🔍</span>
+                    <span class="accordion-title">Photo Slot Inspector</span>
+                  </div>
+                  <div class="accordion-meta-wrap">
+                    <span class="accordion-summary" id="accSummary_slot">Slot #1 · 1.0x</span>
+                    <span class="accordion-chevron" aria-hidden="true">▶</span>
+                  </div>
+                </button>
+                <div class="accordion-body" id="accContent_slot" role="region" aria-labelledby="accHeader_slot" hidden>
+                  <div id="slotInspector" class="slot-inspector-panel">
+                    <div class="inspector-header">
+                      <span id="slotInspectorTitle" class="inspector-title">Photo Slot #1 (Editing)</span>
+                      <button id="btnResetSlotTransform" class="inspector-btn"
+                        title="Reset crop, zoom, and rotation for this slot">↺ Reset Crop</button>
+                    </div>
+
+                    <div id="slotSelectorChips" class="slot-selector-chips" aria-label="Select photo slot to edit"></div>
+
+                    <div class="slot-inspector-grid">
+                      <div class="slot-control-item">
+                        <div style="display:flex; justify-content:space-between;">
+                          <span class="slot-mini-label">Zoom</span>
+                          <span id="slotZoomValText" class="slot-mini-val">1.0x</span>
+                        </div>
+                        <input type="range" id="slotZoomSlider" class="tactile-slider" min="100" max="250"
+                          value="100" />
+                      </div>
+
+                      <div class="slot-control-item">
+                        <div style="display:flex; justify-content:space-between;">
+                          <span class="slot-mini-label">Pan Horizontal (X)</span>
+                          <span id="slotPanXValText" class="slot-mini-val">0%</span>
+                        </div>
+                        <input type="range" id="slotPanXSlider" class="tactile-slider" min="-50" max="50" value="0" />
+                      </div>
+
+                      <div class="slot-control-item">
+                        <div style="display:flex; justify-content:space-between;">
+                          <span class="slot-mini-label">Pan Vertical (Y)</span>
+                          <span id="slotPanYValText" class="slot-mini-val">0%</span>
+                        </div>
+                        <input type="range" id="slotPanYSlider" class="tactile-slider" min="-50" max="50" value="0" />
+                      </div>
+                    </div>
+
+                    <div class="inspector-row" style="margin-top: 6px;">
+                      <button id="btnSlotRotateCCW" class="inspector-btn" title="Rotate 90° counter-clockwise">↺
+                        90°</button>
+                      <button id="btnSlotRotateCW" class="inspector-btn" title="Rotate 90° clockwise">↻ 90°</button>
+                      <button id="btnSlotFlipH" class="inspector-btn" title="Flip horizontally">⇄ Flip H</button>
+                      <button id="btnSlotFlipV" class="inspector-btn" title="Flip vertically">⇅ Flip V</button>
+                    </div>
+
+                    <div
+                      style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:6px;">
+                      <span class="slot-mini-label">Per-Slot Filter:</span>
+                      <select id="slotFilterSelect" class="slot-select">
+                        <option value="">Use Global Filter</option>
+                        <option value="warm-vintage">Warm Vintage</option>
+                        <option value="disposable">Disposable</option>
+                        <option value="film-35mm">35mm Film</option>
+                        <option value="digicam">Digicam</option>
+                        <option value="golden-hour">Golden Hour</option>
+                        <option value="dreamy">Dreamy</option>
+                        <option value="soft-glow">Soft Glow</option>
+                        <option value="nostalgia-90s">90s Nostalgia</option>
+                        <option value="classic-bw">Classic B&W</option>
+                        <option value="faded-bw">Faded Noir</option>
+                        <option value="pastel-peach">Pastel Peach</option>
+                        <option value="original">Original (No Filter)</option>
+                      </select>
+                    </div>
+
+                    <div
+                      style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:6px;">
+                      <span class="slot-mini-label">Swap Photo with:</span>
+                      <select id="slotSwapSelect" class="slot-select">
+                        <option value="1">Slot #2</option>
+                      </select>
+                      <button id="btnSwapSlotConfirm" class="inspector-btn" style="font-weight:700;">⇄ Swap</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item" id="accItem_stamp">
+                <button type="button" class="accordion-header" id="accHeader_stamp" aria-expanded="false"
+                  aria-controls="accContent_stamp" data-section="stamp">
+                  <div class="accordion-title-wrap">
+                    <span class="accordion-icon">✍️</span>
+                    <span class="accordion-title">Custom Date & Footer</span>
+                  </div>
+                  <div class="accordion-meta-wrap">
+                    <span class="accordion-summary" id="accSummary_stamp">CheesyBooth · Center</span>
+                    <span class="accordion-chevron" aria-hidden="true">▶</span>
+                  </div>
+                </button>
+                <div class="accordion-body" id="accContent_stamp" role="region" aria-labelledby="accHeader_stamp"
+                  hidden>
+                  <div class="workbench-section stamp-workbench">
+
+                    <div
+                      style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                      <label
+                        style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--color-charcoal);">
+                        <input type="checkbox" id="stampVisibleToggle" checked
+                          style="accent-color: var(--color-primary); cursor: pointer;" />
+                        <span>Show Stamp Footer</span>
+                      </label>
+                      <button id="btnAiCaption" class="btn-ai-sparkle"
+                        title="Generate creative photobooth captions with AI">
+                        <span>✨</span> AI Caption
+                      </button>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                      <input type="text" id="stampTextInput" class="stamp-input"
+                        placeholder="e.g. CheesyBooth · AUG 2026" maxlength="60" style="flex: 1;" />
+                      <button id="btnClearStampText" class="btn-history" style="padding: 8px 10px; font-size: 11px;"
+                        title="Clear stamp text">✕</button>
+                    </div>
+
+                    <div>
+                      <div
+                        style="font-size: 11px; font-weight: 700; color: var(--color-warm-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+                        Quick Formats & Date Picker</div>
+                      <div class="stamp-presets-grid" id="stampPresetsGrid">
+                        <button class="stamp-preset-chip" data-format="today">📅 Today</button>
+                        <button class="stamp-preset-chip" data-format="datetime">🕒 Date & Time</button>
+                        <button class="stamp-preset-chip" data-format="classic">🎞️ Classic Strip</button>
+                        <button class="stamp-preset-chip" data-format="cheese">🧀 CheesyBooth</button>
+                        <button class="stamp-preset-chip" data-format="memories">❤️ Memories</button>
+                        <input type="date" id="stampDatePicker" class="stamp-preset-chip"
+                          style="padding: 2px 6px; font-size: 11px; border: 1px dashed var(--color-primary); cursor: pointer;"
+                          title="Insert selected date" />
+                      </div>
+                    </div>
+
+                    <div
+                      style="display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 4px;">
+                      <div class="pill-group" id="footerAlignGroup" style="flex: 1;">
+                        <button class="pill-btn" data-align="left" title="Left Align">Left</button>
+                        <button class="pill-btn active" data-align="center" title="Center Align">Center</button>
+                        <button class="pill-btn" data-align="right" title="Right Align">Right</button>
+                      </div>
+                      <select id="footerFontSelect" class="slot-select" style="flex: 1.2;">
+                        <option value="Space Grotesk">Modern (Grotesk)</option>
+                        <option value="Courier Prime">Analog (Courier)</option>
+                        <option value="Playfair Display">Serif (Playfair)</option>
+                        <option value="Cinzel">Editorial (Cinzel)</option>
+                        <option value="Outfit">Clean (Outfit)</option>
+                      </select>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+                      <span
+                        style="font-size: 11px; font-weight: 700; color: var(--color-warm-gray); text-transform: uppercase;">Stamp
+                        Color</span>
+                      <div class="stamp-color-swatches" id="stampColorSwatches">
+                        <button class="stamp-color-swatch active" data-color="auto"
+                          style="background: linear-gradient(135deg, #292724 50%, #FAF6EE 50%); border: 1px solid #ccc;"
+                          title="Auto Contrast"></button>
+                        <button class="stamp-color-swatch" data-color="#292724" style="background: #292724;"
+                          title="Charcoal"></button>
+                        <button class="stamp-color-swatch" data-color="#FAF6EE"
+                          style="background: #FAF6EE; border: 1px solid #ddd;" title="Warm White"></button>
+                        <button class="stamp-color-swatch" data-color="#C89D7C" style="background: #C89D7C;"
+                          title="Sepia Gold"></button>
+                        <button class="stamp-color-swatch" data-color="#E05D5D" style="background: #E05D5D;"
+                          title="Crimson"></button>
+                        <input type="color" id="stampTextColorPicker" value="#292724" title="Custom Color" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item" id="accItem_stickers">
+                <button type="button" class="accordion-header" id="accHeader_stickers" aria-expanded="false"
+                  aria-controls="accContent_stickers" data-section="stickers">
+                  <div class="accordion-title-wrap">
+                    <span class="accordion-icon">✨</span>
+                    <span class="accordion-title">Stickers & Stamps</span>
+                  </div>
+                  <div class="accordion-meta-wrap">
+                    <span class="accordion-summary" id="accSummary_stickers">0 active stamps</span>
+                    <span class="accordion-chevron" aria-hidden="true">▶</span>
+                  </div>
+                </button>
+                <div class="accordion-body" id="accContent_stickers" role="region" aria-labelledby="accHeader_stickers"
+                  hidden>
+                  <div class="workbench-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <span class="workbench-title">Sticker Layers & Stamps</span>
+                      <button id="btnSurpriseSticker" class="btn-history" style="font-size: 11px; padding: 3px 8px;"
+                        title="Drop a random cute sticker onto the collage">✨ Surprise Stamp</button>
+                    </div>
+
+                    <div class="sticker-pack-tabs" id="stickerPackTabs">
+                      <button class="pack-tab-btn active" data-pack="cute">✨ Cute</button>
+                      <button class="pack-tab-btn" data-pack="animals">🐱 Animals</button>
+                      <button class="pack-tab-btn" data-pack="food">☕ Food</button>
+                      <button class="pack-tab-btn" data-pack="doodles">✦ Doodles</button>
+                      <button class="pack-tab-btn" data-pack="party">🎉 Party</button>
+                      <button class="pack-tab-btn" data-pack="favs">♡ Favs</button>
+                      <button class="pack-tab-btn" data-pack="recents">🕒 Recent</button>
+                    </div>
+
+                    <div style="display: flex; gap: 6px;">
+                      <input type="text" id="stickerSearchInput" class="stamp-input"
+                        placeholder="🔍 Search stamps (e.g. cat, star, coffee)..."
+                        style="padding: 6px 10px; font-size: 12px;" />
+                    </div>
+
+                    <div class="stickers-tray" id="stickersTray"></div>
+
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+                      <div style="display:flex; gap:6px;">
+                        <input type="text" id="customStampInput" class="stamp-input"
+                          placeholder="Emoji, text, or GIF link (e.g. 🦄, 💖, or .gif URL)" maxlength="200"
+                          style="flex:1;" />
+                        <button id="btnAddCustomStamp" class="btn-secondary"
+                          style="padding: 6px 14px; font-size: 12px; font-weight: 700;">+ Add</button>
+                      </div>
+                      <label class="btn-secondary"
+                        style="width:100%; justify-content:center; cursor:pointer; font-size:12px; padding:9px 12px; gap:8px;">
+                        <input type="file" id="uploadStickerInput" accept="image/*,.gif,.png,.jpg,.jpeg,.webp"
+                          style="display:none;" />
+                        <span>📁 Upload GIF or Photo Stamp (or Drag & Drop)</span>
+                      </label>
+                    </div>
+
+                    <div id="stickerInspector" class="sticker-inspector-panel" style="display: none;">
+                      <div class="inspector-header">
+                        <span id="inspectorTitle" class="inspector-title">Selected Stamp</span>
+                        <div style="display: flex; gap: 4px;">
+                          <button id="btnInspectorFav" class="inspector-btn" title="Toggle Favorite">♡</button>
+                          <button id="btnInspectorDeselect" class="inspector-btn"
+                            title="Deselect Stamp (Esc)">✕</button>
+                        </div>
+                      </div>
+
+                      <div class="inspector-row">
+                        <button id="btnFlipH" class="inspector-btn" title="Flip Horizontal (H)">⇄ Flip H</button>
+                        <button id="btnFlipV" class="inspector-btn" title="Flip Vertical (V)">⇅ Flip V</button>
+                        <button id="btnDuplicateSticker" class="inspector-btn" title="Duplicate Stamp (Ctrl+D)">📋
+                          Duplicate</button>
+                        <button id="btnToggleLock" class="inspector-btn" title="Lock/Unlock Stamp">🔒 Lock</button>
+                      </div>
+
+                      <div class="inspector-row">
+                        <span
+                          style="font-family: var(--font-mono); font-size: 11px; color: var(--color-charcoal-muted); margin-right: 4px;">Layer:</span>
+                        <button id="btnLayerFront" class="inspector-btn" title="Bring to Front">⬆ Front</button>
+                        <button id="btnLayerForward" class="inspector-btn" title="Bring Forward">▲ Up</button>
+                        <button id="btnLayerBackward" class="inspector-btn" title="Send Backward">▼ Down</button>
+                        <button id="btnLayerBack" class="inspector-btn" title="Send to Back">⬇ Back</button>
+                      </div>
+
+                      <div class="inspector-row" style="flex-wrap: wrap; gap: 4px;">
+                        <span
+                          style="font-family: var(--font-mono); font-size: 11px; color: var(--color-charcoal-muted); width: 100%;">Nudge
+                          Position & Angle:</span>
+                        <button id="btnNudgeLeft" class="inspector-stepper-btn" title="Move Left (←)"
+                          aria-label="Nudge Stamp Left">←</button>
+                        <button id="btnNudgeRight" class="inspector-stepper-btn" title="Move Right (→)"
+                          aria-label="Nudge Stamp Right">→</button>
+                        <button id="btnNudgeUp" class="inspector-stepper-btn" title="Move Up (↑)"
+                          aria-label="Nudge Stamp Up">↑</button>
+                        <button id="btnNudgeDown" class="inspector-stepper-btn" title="Move Down (↓)"
+                          aria-label="Nudge Stamp Down">↓</button>
+                        <button id="btnRotatePreset" class="inspector-stepper-btn" title="Rotate +45° (R)"
+                          aria-label="Rotate Stamp 45 degrees">↻ 45°</button>
+                      </div>
+
+                      <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 2px;">
+                        <div style="display: flex; justify-content: space-between;">
+                          <span
+                            style="font-family: var(--font-mono); font-size: 11px; color: var(--color-charcoal-muted);">Opacity</span>
+                          <span id="stickerOpacityValText"
+                            style="font-family: var(--font-mono); font-size: 11px; font-weight: 700;">100%</span>
+                        </div>
+                        <input type="range" id="stickerOpacitySlider" class="tactile-slider" min="5" max="100"
+                          value="100" />
+                      </div>
+                    </div>
+
+                    <div id="activeStampsContainer" style="margin-top: 8px;">
+                      <div class="active-stamps-header">
+                        <span class="control-label" id="activeStampsCountLabel">Active Stamps (0)</span>
+                        <button id="btnClearStamps" class="btn-clear-stamps" style="display:none;">Clear All</button>
+                      </div>
+                      <div id="activeStampsList" class="active-stamps-list">
+                        <span style="font-size: 11px; color: var(--color-charcoal-subtle); padding: 4px;">No stamps
+                          added yet. Tap an emoji above!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="onboardingModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="onboardingTitle">
+    <div class="modal-card onboarding-card">
+      <div class="onboarding-header">
+        <span class="onboarding-badge">✨</span>
+        <h3 id="onboardingTitle" class="modal-title">Personalize Your Photobooth</h3>
+        <p style="font-size:12px; color:var(--color-charcoal-muted); max-width:340px;">
+          Set up your personalized booth experience in a few quick taps, or skip anytime!
+        </p>
+        <div class="onboarding-progress-dots">
+          <span class="onboarding-dot active" id="obDot1"></span>
+          <span class="onboarding-dot" id="obDot2"></span>
+          <span class="onboarding-dot" id="obDot3"></span>
+        </div>
+      </div>
+
+      <div class="modal-body" style="padding: 10px 24px 20px;">
+
+        <div id="obStep1" class="onboarding-step-view active">
+          <div class="pref-section" style="text-align:left;">
+            <label class="pref-label" for="obDisplayName">Your Name (Optional)</label>
+            <input type="text" id="obDisplayName" class="stamp-input" placeholder="e.g. Sonali" maxlength="30" />
+          </div>
+          <div class="pref-section" style="text-align:left;">
+            <label class="pref-label" for="obBoothName">Booth Name</label>
+            <input type="text" id="obBoothName" class="stamp-input" placeholder="e.g. Sonali's Little Booth"
+              maxlength="40" />
+          </div>
+        </div>
+
+        <div id="obStep2" class="onboarding-step-view">
+          <span class="pref-label" style="text-align:left;">Pick your photobooth vibe</span>
+          <div class="theme-cards-grid" id="obPersonalityGrid">
+            <div class="theme-card active" data-personality="classic">
+              <span class="theme-card-icon">🎞️</span>
+              <span class="theme-card-name">Classic</span>
+              <span class="theme-card-desc">Calm, warm & timeless</span>
+            </div>
+            <div class="theme-card" data-personality="playful">
+              <span class="theme-card-icon">✨</span>
+              <span class="theme-card-name">Playful</span>
+              <span class="theme-card-desc">Energetic & super cute</span>
+            </div>
+            <div class="theme-card" data-personality="cozy">
+              <span class="theme-card-icon">☕</span>
+              <span class="theme-card-name">Cozy</span>
+              <span class="theme-card-desc">Gentle & soft memories</span>
+            </div>
+            <div class="theme-card" data-personality="retro">
+              <span class="theme-card-icon">🎬</span>
+              <span class="theme-card-name">Retro</span>
+              <span class="theme-card-desc">90s analog flash cues</span>
+            </div>
+            <div class="theme-card" data-personality="minimal">
+              <span class="theme-card-icon">◻️</span>
+              <span class="theme-card-name">Minimal</span>
+              <span class="theme-card-desc">Clean, simple & quiet</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="obStep3" class="onboarding-step-view">
+          <div class="pref-section" style="text-align:left;">
+            <span class="pref-label">Default Photo Count</span>
+            <div class="pill-group" id="obPhotoCountGroup">
+              <button class="pill-btn" data-count="2">2 Photos</button>
+              <button class="pill-btn active" data-count="4">4 Photos</button>
+              <button class="pill-btn" data-count="6">6 Photos</button>
+            </div>
+          </div>
+          <div class="pref-section" style="text-align:left; margin-top:8px;">
+            <span class="pref-label">Default Countdown Timer</span>
+            <div class="pill-group" id="obCountdownGroup">
+              <button class="pill-btn" data-seconds="3">3 Seconds</button>
+              <button class="pill-btn active" data-seconds="5">5 Seconds</button>
+              <button class="pill-btn" data-seconds="10">10 Seconds</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnSkipOnboarding" class="btn-secondary" style="font-size:12px; padding:8px 14px;">Skip for
+          now</button>
+        <div style="display:flex; gap:8px;">
+          <button id="btnPrevOnboarding" class="btn-secondary" style="display:none; font-size:12px; padding:8px 14px;">←
+            Back</button>
+          <button id="btnNextOnboarding" class="btn-shutter" style="font-size:12px; padding:8px 18px;">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="surpriseModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="surpriseTitle">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">✨</span>
+          <h3 id="surpriseTitle" class="modal-title">Your Surprise Setup</h3>
+        </div>
+        <button id="btnCloseSurprise" class="modal-close-btn" title="Close (Esc)">✕</button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="surprise-family-banner">
+          <span class="surprise-family-icon" id="surpriseFamilyIcon">🎞️</span>
+          <div class="surprise-family-info">
+            <span class="surprise-family-title" id="surpriseFamilyTitle">Vintage Nostalgia</span>
+            <span class="surprise-family-tagline" id="surpriseFamilyTagline">Curated analog warm tone collection</span>
+          </div>
+        </div>
+
+        <div class="surprise-items-grid">
+
+          <div class="surprise-item-row">
+            <div class="surprise-item-label-group">
+              <span class="surprise-item-icon">🎭</span>
+              <span class="surprise-item-name">Mode</span>
+              <span class="surprise-item-val" id="surpriseValMode">Pose Challenge</span>
+            </div>
+            <div class="surprise-actions-group">
+              <button class="btn-reroll-item" data-param="mode" title="Reroll Mode">↻</button>
+              <button class="btn-lock-toggle" data-param="mode" title="Lock/Unlock Mode">🔓</button>
+            </div>
+          </div>
+
+          <div class="surprise-item-row">
+            <div class="surprise-item-label-group">
+              <span class="surprise-item-icon">📸</span>
+              <span class="surprise-item-name">Photos</span>
+              <span class="surprise-item-val" id="surpriseValShots">4 Photos</span>
+            </div>
+            <div class="surprise-actions-group">
+              <button class="btn-reroll-item" data-param="photoCount" title="Reroll Photo Count">↻</button>
+              <button class="btn-lock-toggle" data-param="photoCount" title="Lock/Unlock Photos">🔓</button>
+            </div>
+          </div>
+
+          <div class="surprise-item-row">
+            <div class="surprise-item-label-group">
+              <span class="surprise-item-icon">⏱️</span>
+              <span class="surprise-item-name">Timer</span>
+              <span class="surprise-item-val" id="surpriseValCountdown">5 Seconds</span>
+            </div>
+            <div class="surprise-actions-group">
+              <button class="btn-reroll-item" data-param="countdown" title="Reroll Countdown">↻</button>
+              <button class="btn-lock-toggle" data-param="countdown" title="Lock/Unlock Countdown">🔓</button>
+            </div>
+          </div>
+
+          <div class="surprise-item-row">
+            <div class="surprise-item-label-group">
+              <span class="surprise-item-icon">🎨</span>
+              <span class="surprise-item-name">Filter</span>
+              <span class="surprise-item-val" id="surpriseValFilter">Warm Vintage</span>
+            </div>
+            <div class="surprise-actions-group">
+              <button class="btn-reroll-item" data-param="filter" title="Reroll Filter">↻</button>
+              <button class="btn-lock-toggle" data-param="filter" title="Lock/Unlock Filter">🔓</button>
+            </div>
+          </div>
+
+          <div class="surprise-item-row">
+            <div class="surprise-item-label-group">
+              <span class="surprise-item-icon">📐</span>
+              <span class="surprise-item-name">Layout</span>
+              <span class="surprise-item-val" id="surpriseValLayout">Vertical 4-Strip</span>
+            </div>
+            <div class="surprise-actions-group">
+              <button class="btn-reroll-item" data-param="layout" title="Reroll Layout">↻</button>
+              <button class="btn-lock-toggle" data-param="layout" title="Lock/Unlock Layout">🔓</button>
+            </div>
+          </div>
+
+          <div class="surprise-item-row">
+            <div class="surprise-item-label-group">
+              <span class="surprise-item-icon">🖼️</span>
+              <span class="surprise-item-name">Frame</span>
+              <span class="surprise-item-val" id="surpriseValFrame">Linen Cream</span>
+            </div>
+            <div class="surprise-actions-group">
+              <button class="btn-reroll-item" data-param="frameColor" title="Reroll Frame Color">↻</button>
+              <button class="btn-lock-toggle" data-param="frameColor" title="Lock/Unlock Frame">🔓</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="surprise-footer-actions">
+          <button id="btnTryAgainSurprise" class="btn-secondary" style="font-size:12px;">
+            <span>↻</span> Try Another Surprise
+          </button>
+          <div class="surprise-footer-right">
+            <button id="btnCancelSurprise" class="btn-secondary" style="font-size:12px;">Cancel</button>
+            <button id="btnApplySurprise" class="btn-shutter" style="padding:8px 18px; font-size:12px;">
+              <span>✓</span> Use This Setup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="preferencesModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="preferencesTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">⚙️</span>
+          <h3 id="preferencesTitle" class="modal-title">Customize Booth</h3>
+        </div>
+        <button id="btnClosePreferences" class="modal-close-btn" title="Close Preferences (Esc)">✕</button>
+      </div>
+
+      <nav class="modal-nav-tabs" id="prefTabs">
+        <button class="modal-tab-btn active" data-tab="profile">👤 Profile</button>
+        <button class="modal-tab-btn" data-tab="defaults">⚙️ Defaults</button>
+        <button class="modal-tab-btn" data-tab="appearance">🎨 Appearance</button>
+        <button class="modal-tab-btn" data-tab="experience">🔊 Experience</button>
+        <button class="modal-tab-btn" data-tab="favorites">♡ Favorites</button>
+        <button class="modal-tab-btn" data-tab="ai">✨ AI Features</button>
+        <button class="modal-tab-btn" data-tab="data">🔒 Privacy & Data</button>
+        <button class="modal-tab-btn" data-tab="pwa">📱 App & Offline</button>
+      </nav>
+
+      <div class="modal-body" id="prefTabContent">
+
+        <div id="tabProfile" class="pref-tab-panel">
+          <div class="pref-section">
+            <label class="pref-label" for="prefDisplayName">Your Display Name</label>
+            <input type="text" id="prefDisplayName" class="stamp-input" placeholder="e.g. Sonali" maxlength="40" />
+            <span class="pref-hint">Used for subtle greetings in your booth.</span>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefBoothName">Booth Title</label>
+            <input type="text" id="prefBoothName" class="stamp-input" placeholder="e.g. CheesyBooth" maxlength="50" />
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefGreeting">Custom Greeting Microcopy</label>
+            <input type="text" id="prefGreeting" class="stamp-input" placeholder="e.g. Ready to make a memory?"
+              maxlength="80" />
+          </div>
+        </div>
+
+        <div id="tabDefaults" class="pref-tab-panel" style="display:none;">
+          <div class="pref-section">
+            <span class="pref-label">Default Target Shots</span>
+            <div class="pill-group" id="prefPhotoCountGroup">
+              <button class="pill-btn" data-count="2">2</button>
+              <button class="pill-btn active" data-count="4">4</button>
+              <button class="pill-btn" data-count="6">6</button>
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <span class="pref-label">Default Countdown</span>
+            <div class="pill-group" id="prefCountdownGroup">
+              <button class="pill-btn" data-seconds="3">3s</button>
+              <button class="pill-btn active" data-seconds="5">5s</button>
+              <button class="pill-btn" data-seconds="10">10s</button>
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <span class="pref-label">Pose Prompts</span>
+            <div class="pill-group" id="prefPosePromptsGroup">
+              <button class="pill-btn active" data-mode="on">ON</button>
+              <button class="pill-btn" data-mode="off">OFF</button>
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefDefaultFunMode">Default Fun Mode</label>
+            <select id="prefDefaultFunMode" class="slot-select" style="width:100%;">
+              <option value="classic">🪵 Classic Booth</option>
+              <option value="rapid-fire">⚡ Rapid Fire</option>
+              <option value="slow-cinematic">🎬 Slow & Cinematic</option>
+              <option value="pose-challenge">🎭 Pose Challenge</option>
+              <option value="mystery-pose">❓ Mystery Pose</option>
+              <option value="freeze-frame">🧊 Freeze Frame</option>
+              <option value="duo-group">👥 Duo & Group</option>
+              <option value="reaction">😲 Reaction Desk</option>
+              <option value="countdown-chaos">🎲 Countdown Chaos</option>
+              <option value="one-take">🎯 One-Take Pure</option>
+              <option value="silent-booth">🤫 Silent Booth</option>
+              <option value="random-mix">✨ Random Mix</option>
+            </select>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefDefaultLayout">Default Collage Layout</label>
+            <select id="prefDefaultLayout" class="slot-select" style="width:100%;">
+              <option value="vertical-strip">Classic 4-Strip</option>
+              <option value="grid-2x2">2 × 2 Grid</option>
+              <option value="horizontal-strip">Wide Strip</option>
+              <option value="featured-3plus1">3 + 1 Featured</option>
+              <option value="grid-2x3">2 × 3 Grid</option>
+              <option value="film-vertical">35mm Film Strip</option>
+              <option value="duo-editorial">Duo Editorial</option>
+              <option value="trio-minimal">Trio Balance</option>
+              <option value="asymmetric-fun">Playful Collage</option>
+            </select>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefDefaultFilter">Default Analog Filter</label>
+            <select id="prefDefaultFilter" class="slot-select" style="width:100%;">
+              <option value="warm-vintage">Warm Vintage</option>
+              <option value="disposable">Disposable</option>
+              <option value="film-35mm">35mm Film</option>
+              <option value="digicam">Digicam</option>
+              <option value="golden-hour">Golden Hour</option>
+              <option value="dreamy">Dreamy</option>
+              <option value="soft-glow">Soft Glow</option>
+              <option value="nostalgia-90s">90s Nostalgia</option>
+              <option value="classic-bw">Classic B&W</option>
+              <option value="faded-bw">Faded Noir</option>
+              <option value="pastel-peach">Pastel Peach</option>
+              <option value="original">Original</option>
+            </select>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefDefaultFrameStyle">Default Frame Style</label>
+            <select id="prefDefaultFrameStyle" class="slot-select" style="width:100%;">
+              <option value="clean">Clean</option>
+              <option value="film">Film 35mm</option>
+              <option value="polaroid">Polaroid</option>
+              <option value="vintage">Vintage Line</option>
+              <option value="rounded">Soft Rounded</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="tabAppearance" class="pref-tab-panel" style="display:none;">
+          <div class="pref-section">
+            <span class="pref-label">Booth Collections & Machine Styling</span>
+            <div class="theme-cards-grid" id="prefThemesGrid">
+              <div class="theme-card active" data-theme="classic-booth">
+                <span class="theme-card-icon">🪵</span>
+                <span class="theme-card-name">Classic Booth</span>
+                <span class="theme-card-desc">Linen & terracotta booth</span>
+              </div>
+              <div class="theme-card" data-theme="retro-film">
+                <span class="theme-card-icon">🎞️</span>
+                <span class="theme-card-name">Retro Film</span>
+                <span class="theme-card-desc">Analog 35mm darkroom</span>
+              </div>
+              <div class="theme-card" data-theme="flash-90s">
+                <span class="theme-card-icon">⚡</span>
+                <span class="theme-card-name">90s Disposable</span>
+                <span class="theme-card-desc">Punchy flash nostalgia</span>
+              </div>
+              <div class="theme-card" data-theme="cozy-memory">
+                <span class="theme-card-icon">🌸</span>
+                <span class="theme-card-name">Cozy Memory</span>
+                <span class="theme-card-desc">Pastel peach & sage</span>
+              </div>
+              <div class="theme-card" data-theme="digital-camera">
+                <span class="theme-card-icon">📷</span>
+                <span class="theme-card-name">2000s Digicam</span>
+                <span class="theme-card-desc">Y2K cyber compact</span>
+              </div>
+              <div class="theme-card" data-theme="minimal-studio">
+                <span class="theme-card-icon">🏛️</span>
+                <span class="theme-card-name">Minimal Studio</span>
+                <span class="theme-card-desc">Gallery clean editorial</span>
+              </div>
+              <div class="theme-card" data-theme="playful-booth">
+                <span class="theme-card-icon">🍭</span>
+                <span class="theme-card-name">Playful Candy</span>
+                <span class="theme-card-desc">Sunny & lively energy</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:12px;">
+            <span class="pref-label">Booth Personality & Microcopy</span>
+            <div class="theme-cards-grid" id="prefPersonalityGrid">
+              <div class="theme-card active" data-personality="classic">
+                <span class="theme-card-icon">🎞️</span>
+                <span class="theme-card-name">Classic</span>
+                <span class="theme-card-desc">Warm & nostalgic</span>
+              </div>
+              <div class="theme-card" data-personality="playful">
+                <span class="theme-card-icon">✨</span>
+                <span class="theme-card-name">Playful</span>
+                <span class="theme-card-desc">Energetic & cute reactions</span>
+              </div>
+              <div class="theme-card" data-personality="cozy">
+                <span class="theme-card-icon">☕</span>
+                <span class="theme-card-name">Cozy</span>
+                <span class="theme-card-desc">Gentle & reassuring</span>
+              </div>
+              <div class="theme-card" data-personality="retro">
+                <span class="theme-card-icon">🎬</span>
+                <span class="theme-card-name">Retro</span>
+                <span class="theme-card-desc">Analog shutter cues</span>
+              </div>
+              <div class="theme-card" data-personality="minimal">
+                <span class="theme-card-icon">◻️</span>
+                <span class="theme-card-name">Minimal</span>
+                <span class="theme-card-desc">Quiet, clean text</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:12px;">
+            <div class="pref-row">
+              <div class="pref-row-desc">
+                <span class="pref-name">Custom Accent Color</span>
+                <span class="pref-hint">Changes buttons, highlights & badges</span>
+              </div>
+              <input type="color" id="prefAccentPicker" value="#C86D51"
+                style="width:36px; height:36px; border:none; border-radius:50%; cursor:pointer; background:none;" />
+            </div>
+          </div>
+        </div>
+
+        <div id="tabExperience" class="pref-tab-panel" style="display:none;">
+          <div class="pref-section">
+            <div class="pref-row">
+              <div class="pref-row-desc">
+                <span class="pref-name">Sound Effects</span>
+                <span class="pref-hint">Mechanical shutter clicks & ticks</span>
+              </div>
+              <button id="prefToggleSound" class="pill-btn active">ON</button>
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <div style="display:flex; justify-content:space-between;">
+              <span class="pref-name">Sound Volume</span>
+              <span id="prefVolumeVal" class="slot-mini-val">80%</span>
+            </div>
+            <input type="range" id="prefVolumeSlider" class="tactile-slider" min="0" max="100" value="80" />
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefSoundStyle">Sound Style</label>
+            <select id="prefSoundStyle" class="slot-select" style="width:100%;">
+              <option value="classic">Classic Mechanical</option>
+              <option value="soft">Soft & Gentle</option>
+              <option value="retro">Retro Synthesizer</option>
+            </select>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefAnimIntensity">Animation Intensity</label>
+            <select id="prefAnimIntensity" class="slot-select" style="width:100%;">
+              <option value="full">Full (Smooth transitions & spring motion)</option>
+              <option value="reduced">Reduced Motion (Minimal movement)</option>
+              <option value="off">Off (Instant transitions)</option>
+            </select>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <label class="pref-label" for="prefPerformanceMode">Performance & Battery</label>
+            <select id="prefPerformanceMode" class="slot-select" style="width:100%;">
+              <option value="balanced" selected>⚡ Balanced (Recommended)</option>
+              <option value="quality">✨ Quality (Max preview fidelity on high-end hardware)</option>
+              <option value="battery-saver">🔋 Battery Saver (Lightweight preview & calm animations)</option>
+            </select>
+            <span class="pref-hint" style="margin-top:4px;">Adjusts live preview rendering scale and background
+              animations. Exports are always rendered at full selected resolution.</span>
+          </div>
+
+          <div class="pref-section" style="margin-top:10px;">
+            <div class="pref-row">
+              <div class="pref-row-desc">
+                <span class="pref-name">Mirror Camera Preview</span>
+                <span class="pref-hint">Flips live viewfinder horizontally</span>
+              </div>
+              <button id="prefToggleMirror" class="pill-btn active">ON</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="tabFavorites" class="pref-tab-panel" style="display:none;">
+          <div class="pref-section">
+            <span class="pref-label">Favorite Analog Filters</span>
+            <div id="favFiltersList" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:14px;">
+            <span class="pref-label">Favorite Layouts</span>
+            <div id="favLayoutsList" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:14px;">
+            <span class="pref-label">Favorite Sticker Stamps</span>
+            <div id="favStickersList" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+
+            </div>
+          </div>
+        </div>
+
+        <div id="tabData" class="pref-tab-panel" style="display:none;">
+
+          <div class="privacy-audit-grid">
+            <div class="privacy-audit-card">
+              <div class="privacy-audit-header">
+                <span>📷</span>
+                <span>Camera Privacy</span>
+              </div>
+              <span class="privacy-audit-status">Active Only in Booth</span>
+              <span class="privacy-audit-desc">Stream hardware tracks are stopped when leaving booth or switching
+                tabs.</span>
+            </div>
+
+            <div class="privacy-audit-card">
+              <div class="privacy-audit-header">
+                <span>🖼️</span>
+                <span>Photos & Prints</span>
+              </div>
+              <span class="privacy-audit-status">100% Local Storage</span>
+              <span class="privacy-audit-desc">Saved directly to your browser's IndexedDB. Never uploaded to the
+                cloud.</span>
+            </div>
+
+            <div class="privacy-audit-card">
+              <div class="privacy-audit-header">
+                <span>🔒</span>
+                <span>Zero Telemetry</span>
+              </div>
+              <span class="privacy-audit-status">No Analytics / Tracking</span>
+              <span class="privacy-audit-desc">No ad trackers, no analytics scripts, no background beacons or
+                logs.</span>
+            </div>
+
+            <div class="privacy-audit-card">
+              <div class="privacy-audit-header">
+                <span>🎤</span>
+                <span>Microphone & Location</span>
+              </div>
+              <span class="privacy-audit-status">Never Requested</span>
+              <span class="privacy-audit-desc">Sounds are synthesized locally via Web Audio. Zero geolocation
+                tracking.</span>
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:12px;">
+            <div class="pref-row">
+              <div class="pref-row-desc">
+                <span class="pref-name">Manage Local Data</span>
+                <span class="pref-hint">Inspect and manage data stored locally in this browser.</span>
+              </div>
+              <button id="btnRefreshDataStats" class="pill-btn" title="Refresh storage metrics"
+                style="padding:4px 10px; font-size:11px;">
+                <span>↻ Refresh</span>
+              </button>
+            </div>
+
+            <div class="data-breakdown-box">
+              <div class="data-breakdown-row">
+                <div class="data-breakdown-label">
+                  <span>📸</span>
+                  <span>Captured Photo Sessions</span>
+                </div>
+                <span id="dataPhotoCountBadge" class="data-breakdown-badge">0 sessions (0 photos)</span>
+              </div>
+
+              <div class="data-breakdown-row">
+                <div class="data-breakdown-label">
+                  <span>🎞️</span>
+                  <span>Saved Collage Prints</span>
+                </div>
+                <span id="dataCollageCountBadge" class="data-breakdown-badge">0 saved</span>
+              </div>
+
+              <div class="data-breakdown-row">
+                <div class="data-breakdown-label">
+                  <span>⚙️</span>
+                  <span>Personalization & Favorites</span>
+                </div>
+                <span id="dataPrefsBadge" class="data-breakdown-badge">Active (Local)</span>
+              </div>
+
+              <div class="data-breakdown-row">
+                <div class="data-breakdown-label">
+                  <span>💾</span>
+                  <span>Storage Engine</span>
+                </div>
+                <span id="dataEngineBadge" class="data-breakdown-badge"
+                  style="color:#62B86E; border-color:rgba(98,184,110,0.3); background:rgba(98,184,110,0.1);">IndexedDB</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:12px;">
+            <span class="pref-name">Backup & Transfer Preferences</span>
+            <span class="pref-hint">Export or import your personalization profile safely without cloud upload.</span>
+            <div style="display:flex; gap:8px; margin-top:8px;">
+              <button id="btnExportPrefs" class="btn-secondary" style="flex:1; justify-content:center;">
+                <span>💾</span> Export JSON
+              </button>
+              <label class="btn-secondary" style="flex:1; justify-content:center; cursor:pointer;">
+                <input type="file" id="importPrefsFile" accept=".json,application/json" style="display:none;" />
+                <span>📥 Import JSON</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="data-danger-section">
+            <div class="data-danger-title">
+              <span>⚠️</span>
+              <span>Granular Data Deletion</span>
+            </div>
+            <p class="data-danger-desc">
+              Delete specific categories of local data or perform a complete clean wipe. Data is removed immediately
+              from this browser's local storage.
+            </p>
+            <div class="data-actions-grid">
+              <button id="btnDeletePhotos" class="btn-danger-soft" title="Deletes captured booth photos from IndexedDB">
+                <span>🗑️</span> Delete Stored Photos
+              </button>
+              <button id="btnDeleteCollages" class="btn-danger-soft" title="Deletes saved collage arrangements">
+                <span>🗑️</span> Delete Saved Collages
+              </button>
+              <button id="btnResetPrefsOnly" class="btn-danger-soft" title="Restores default booth settings">
+                <span>↺</span> Reset Preferences
+              </button>
+              <button id="btnClearAllData" class="btn-danger-soft"
+                style="grid-column: 1 / -1; border-color: rgba(186,26,26,0.5); background: rgba(186,26,26,0.18); font-weight:700;">
+                <span>⚠️</span> Clear All Say Cheese Data
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="tabPwa" class="pref-tab-panel" style="display:none;">
+          <div class="pwa-status-card">
+            <div class="pwa-status-header">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:20px;">📱</span>
+                <div>
+                  <strong style="font-size:13px; display:block;">Install Say Cheese</strong>
+                  <span style="font-size:11px; color:var(--color-charcoal-subtle);">Standalone App & Offline
+                    Shell</span>
+                </div>
+              </div>
+              <span id="pwaConnectivityBadge" class="pref-badge"
+                style="font-size:10px; background:#E8F5E9; color:#2E7D32;">Online 🟢</span>
+            </div>
+
+            <p style="font-size:12px; color:var(--color-charcoal-main); line-height:1.45;" id="pwaInstallDescription">
+              Install Say Cheese as a dedicated desktop or mobile app for instant startup, offline photobooth capture,
+              and window management.
+            </p>
+
+            <div id="pwaInstallActionContainer">
+              <button id="btnPwaInstallApp" class="pwa-install-btn">
+                <span>📥</span> Install Say Cheese App
+              </button>
+            </div>
+
+            <div id="pwaInstalledNotice"
+              style="display:none; background:#E8F5E9; border:1px solid #C8E6C9; border-radius:10px; padding:10px 14px; font-size:12px; color:#2E7D32; align-items:center; gap:8px;">
+              <span>✓</span>
+              <span>Say Cheese is installed and running in standalone app mode!</span>
+            </div>
+
+            <div id="pwaIosGuidance"
+              style="display:none; background:#FFF8E6; border:1px solid #FFE082; border-radius:10px; padding:10px 14px; font-size:11.5px; color:#8C6A00;">
+              <strong>iOS Installation:</strong> Tap the Safari Share button <span style="font-size:13px;">⎋</span> at
+              the bottom of your screen, then select <strong>'Add to Home Screen'</strong>.
+            </div>
+          </div>
+
+          <div class="pref-section" style="margin-top:12px;">
+            <span class="pref-name">Offline Capability & Privacy</span>
+            <span class="pref-hint" style="margin-top:4px; line-height:1.45; display:block;">
+              • <strong>Offline Shell:</strong> Camera, filters, stickers, collage builder, and print tools work without
+              internet.<br />
+              • <strong>Local Privacy:</strong> Photos are stored strictly in this browser's IndexedDB and never cached
+              by the Service Worker.<br />
+              • <strong>Version:</strong> Say Cheese v1.0 (PWA Enabled)
+            </span>
+          </div>
+        </div>
+
+        <div id="tabAi" class="pref-tab-panel" style="display:none;">
+          <div class="pref-section">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong class="pref-name" style="font-size:13px; display:block;">Enable AI Enhancements</strong>
+                <span class="pref-hint" style="margin-top:2px; display:block;">Optional creative suggestions for
+                  captions, themes, poses, and layouts.</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefAiMasterToggle" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="pref-section"
+            style="margin-top:12px; background:var(--surface-well); padding:12px 14px; border-radius:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:12px; font-weight:700; color:var(--color-charcoal);">Provider Status</span>
+              <span id="prefAiStatusBadge" class="pref-badge" style="background:#E8F5E9; color:#2E7D32;">Available
+                (Local Fallback Active)</span>
+            </div>
+            <p style="font-size:11.5px; color:var(--color-charcoal-muted); margin:0; line-height:1.45;">
+              Say Cheese uses 100% offline local creative heuristics by default. No photos or prompts leave your device
+              unless you explicitly enable external photo analysis.
+            </p>
+          </div>
+
+          <div class="pref-section" style="margin-top:12px;">
+            <span class="pref-name" style="font-size:12px; margin-bottom:8px; display:block;">Text-Based Creative
+              Features</span>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label
+                style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:var(--color-charcoal);">
+                <span>✨ AI Captions & Stamp Writing</span>
+                <input type="checkbox" id="prefAiCaptionsToggle" checked />
+              </label>
+              <label
+                style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:var(--color-charcoal);">
+                <span>🎭 Dynamic Pose Suggestions</span>
+                <input type="checkbox" id="prefAiPosesToggle" checked />
+              </label>
+              <label
+                style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:var(--color-charcoal);">
+                <span>🎨 Booth Theme & Layout Recommendations</span>
+                <input type="checkbox" id="prefAiThemesToggle" checked />
+              </label>
+            </div>
+          </div>
+
+          <div class="pref-section"
+            style="margin-top:12px; border-top:1px solid var(--surface-panel-border); padding-top:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong class="pref-name" style="font-size:12.5px; display:block;">Photo-Based AI Analysis</strong>
+                <span class="pref-hint" style="margin-top:2px; display:block;">Optional composition & lighting analysis.
+                  Requires explicit action per photo.</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="prefAiPhotoToggle" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <span class="pref-hint" style="display:block; margin-top:6px; font-size:11px; color:#BA1A1A;">
+              🔒 Default is OFF. Photos are never uploaded automatically. Strictly NO facial recognition.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span style="font-family:var(--font-mono); font-size:11px; color:var(--color-charcoal-subtle);">All data &
+          photos saved locally 🔒</span>
+        <button id="btnDonePreferences" class="btn-shutter" style="padding:8px 20px; font-size:12px;">Save &
+          Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="aiCaptionModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="aiCaptionTitle">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">✨</span>
+          <h3 id="aiCaptionTitle" class="modal-title">AI Caption Studio</h3>
+        </div>
+        <button id="btnCloseAiCaption" class="modal-close-btn" title="Close (Esc)">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <span style="font-size:12px; color:var(--color-charcoal-muted); display:block; margin-bottom:8px;">Choose a
+          Caption Mood:</span>
+        <div class="ai-styles-ribbon" id="aiCaptionStyleRibbon">
+          <button class="ai-style-chip active" data-style="cute">Cute 🌸</button>
+          <button class="ai-style-chip" data-style="funny">Funny 🤪</button>
+          <button class="ai-style-chip" data-style="minimal">Minimal ◻️</button>
+          <button class="ai-style-chip" data-style="nostalgic">Nostalgic 🎞️</button>
+          <button class="ai-style-chip" data-style="romantic">Romantic 💕</button>
+          <button class="ai-style-chip" data-style="chaotic">Chaotic ⚡</button>
+          <button class="ai-style-chip" data-style="retro">Retro 📻</button>
+          <button class="ai-style-chip" data-style="confident">Confident 🕶️</button>
+        </div>
+
+        <div id="aiCaptionLoading" class="ai-loading-container" style="display:none;">
+          <div class="ai-loading-spinner"></div>
+          <span class="ai-loading-text">Crafting photobooth captions... ✨</span>
+        </div>
+
+        <div id="aiCaptionResultsContainer" class="ai-captions-container">
+
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button id="btnAiRegenCaptions" class="btn-secondary" style="font-size:12px; padding:7px 14px;">
+          <span>↻</span> Regenerate
+        </button>
+        <button id="btnCancelAiCaption" class="btn-history" style="font-size:12px; padding:7px 14px;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="aiPlannerModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="aiPlannerTitle">
+    <div class="modal-card" style="max-width: 540px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">✨</span>
+          <h3 id="aiPlannerTitle" class="modal-title">Creative Session Planner</h3>
+        </div>
+        <button id="btnCloseAiPlanner" class="modal-close-btn" title="Close (Esc)">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <span style="font-size:12px; color:var(--color-charcoal-muted); display:block; margin-bottom:6px;">Select
+          Vibe:</span>
+        <div class="ai-styles-ribbon">
+          <button class="ai-mood-chip active" data-mood="fun">🎈 Fun</button>
+          <button class="ai-mood-chip" data-mood="romantic">💕 Romantic</button>
+          <button class="ai-mood-chip" data-mood="nostalgic">🎞️ Nostalgic</button>
+          <button class="ai-mood-chip" data-mood="chaotic">💥 Chaotic</button>
+          <button class="ai-mood-chip" data-mood="warm">☕ Warm Cozy</button>
+          <button class="ai-mood-chip" data-mood="retro">📽️ Retro</button>
+        </div>
+
+        <span
+          style="font-size:12px; color:var(--color-charcoal-muted); display:block; margin-top:10px; margin-bottom:6px;">Group
+          Size:</span>
+        <div class="ai-styles-ribbon">
+          <button class="ai-group-chip active" data-size="1">👤 Solo (1)</button>
+          <button class="ai-group-chip" data-size="2">👥 Duo (2)</button>
+          <button class="ai-group-chip" data-size="3">🎉 Squad (3+)</button>
+        </div>
+
+        <div id="aiPlannerLoading" class="ai-loading-container" style="display:none;">
+          <div class="ai-loading-spinner"></div>
+          <span class="ai-loading-text">Assembling cohesive session concept... ✨</span>
+        </div>
+
+        <div id="aiPlannerPreview">
+
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button id="btnAiRegenPlan" class="btn-secondary" style="font-size:12px; padding:7px 14px;">
+          <span>↻</span> Try Another
+        </button>
+        <button id="btnCancelAiPlanner" class="btn-history" style="font-size:12px; padding:7px 14px;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="keyboardHelpModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="keyboardHelpTitle">
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">⌨️</span>
+          <h3 id="keyboardHelpTitle" class="modal-title">Keyboard Shortcuts</h3>
+        </div>
+        <button id="btnCloseKeyboardHelp" class="modal-close-btn" title="Close (Esc)">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcut-group">
+          <span class="shortcut-group-title">Photobooth & Capture</span>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Capture photo / Start booth</span>
+            <div class="shortcut-keys"><span class="kbd-badge">Space</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Flip Camera (Front/Rear)</span>
+            <div class="shortcut-keys"><span class="kbd-badge">C</span></div>
+          </div>
+        </div>
+
+        <div class="shortcut-group">
+          <span class="shortcut-group-title">History & Navigation</span>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Undo previous edit</span>
+            <div class="shortcut-keys"><span class="kbd-badge">Ctrl/⌘</span> + <span class="kbd-badge">Z</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Redo edit</span>
+            <div class="shortcut-keys"><span class="kbd-badge">Ctrl/⌘</span> + <span class="kbd-badge">Shift</span> +
+              <span class="kbd-badge">Z</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Close modal / Deselect stamp</span>
+            <div class="shortcut-keys"><span class="kbd-badge">Esc</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Open this Shortcuts Cheat Sheet</span>
+            <div class="shortcut-keys"><span class="kbd-badge">?</span></div>
+          </div>
+        </div>
+
+        <div class="shortcut-group">
+          <span class="shortcut-group-title">Sticker & Stamp Editing</span>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Nudge selected stamp (1-2px)</span>
+            <div class="shortcut-keys"><span class="kbd-badge">↑</span> <span class="kbd-badge">↓</span> <span
+                class="kbd-badge">←</span> <span class="kbd-badge">→</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Fast nudge (10px)</span>
+            <div class="shortcut-keys"><span class="kbd-badge">Shift</span> + <span class="kbd-badge">Arrows</span>
+            </div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Rotate selected stamp 45°</span>
+            <div class="shortcut-keys"><span class="kbd-badge">R</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Duplicate selected stamp</span>
+            <div class="shortcut-keys"><span class="kbd-badge">Ctrl/⌘</span> + <span class="kbd-badge">D</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Layer forward / backward</span>
+            <div class="shortcut-keys"><span class="kbd-badge">Ctrl/⌘</span> + <span class="kbd-badge">]</span> / <span
+                class="kbd-badge">[</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-desc">Delete selected stamp</span>
+            <div class="shortcut-keys"><span class="kbd-badge">Delete</span> / <span class="kbd-badge">Backspace</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: flex-end;">
+        <button id="btnDoneKeyboardHelp" class="btn-shutter" style="padding: 8px 20px; font-size: 12px;">Got
+          it!</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="customShotsModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="customShotsModalTitle">
+    <div class="modal-card" style="max-width: 380px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">📸</span>
+          <h3 id="customShotsModalTitle" class="modal-title">Custom Photo Session</h3>
+        </div>
+        <button id="btnCloseCustomShotsModal" class="modal-close-btn" title="Cancel (Esc)">✕</button>
+      </div>
+      <div class="modal-body"
+        style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 16px 8px;">
+        <p style="font-size: 14px; color: var(--color-charcoal-muted); margin: 0; font-weight: 500;">
+          How many photos would you like in your session?
+        </p>
+        <div style="display: inline-flex; align-items: center; gap: 8px;">
+          <input type="number" id="modalCustomShotsInput" class="custom-val-input" min="1" max="30" value="8"
+            style="width: 72px; font-size: 20px; font-weight: 700; padding: 8px 12px; border-radius: var(--radius-md);"
+            aria-label="Number of photos" />
+          <span
+            style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--color-charcoal);">photos</span>
+        </div>
+        <p id="modalCustomShotsError"
+          style="font-size: 12px; color: var(--color-error); margin: 0; min-height: 16px; display: none;"></p>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button id="btnCancelCustomShots" class="btn-secondary" style="font-size: 12px;">Cancel</button>
+        <button id="btnConfirmCustomShots" class="btn-shutter" style="padding: 8px 20px; font-size: 12px;">
+          <span>✨</span> Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="customCountdownModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="customCountdownModalTitle">
+    <div class="modal-card" style="max-width: 380px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">⏱️</span>
+          <h3 id="customCountdownModalTitle" class="modal-title">Custom Countdown</h3>
+        </div>
+        <button id="btnCloseCustomCountdownModal" class="modal-close-btn" title="Cancel (Esc)">✕</button>
+      </div>
+      <div class="modal-body"
+        style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 16px 8px;">
+        <p style="font-size: 14px; color: var(--color-charcoal-muted); margin: 0; font-weight: 500;">
+          How many seconds before each photo?
+        </p>
+        <div style="display: inline-flex; align-items: center; gap: 8px;">
+          <input type="number" id="modalCustomCountdownInput" class="custom-val-input" min="1" max="60" value="5"
+            style="width: 72px; font-size: 20px; font-weight: 700; padding: 8px 12px; border-radius: var(--radius-md);"
+            aria-label="Countdown duration in seconds" />
+          <span
+            style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--color-charcoal);">seconds</span>
+        </div>
+        <p id="modalCustomCountdownError"
+          style="font-size: 12px; color: var(--color-error); margin: 0; min-height: 16px; display: none;"></p>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button id="btnCancelCustomCountdown" class="btn-secondary" style="font-size: 12px;">Cancel</button>
+        <button id="btnConfirmCustomCountdown" class="btn-shutter" style="padding: 8px 20px; font-size: 12px;">
+          <span>⏱️</span> Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="deleteConfirmModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="deleteConfirmTitle">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon" style="color:var(--color-error);">⚠️</span>
+          <h3 id="deleteConfirmTitle" class="modal-title">Delete Stored Data?</h3>
+        </div>
+        <button id="btnCloseDeleteConfirm" class="modal-close-btn" title="Cancel (Esc)">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="deleteConfirmDesc"
+          style="font-size:13.5px; line-height:1.55; color:var(--color-charcoal-main); margin:0 0 12px 0;">
+          This will permanently remove your locally stored Say Cheese data from this browser. This action cannot be
+          undone.
+        </p>
+        <div
+          style="background:rgba(186,26,26,0.06); border:1px solid rgba(186,26,26,0.2); border-radius:8px; padding:10px 12px; font-size:12px; color:var(--color-charcoal-subtle);">
+          🔒 Say Cheese is 100% local. Your data will be deleted immediately from your device's browser database.
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button id="btnCancelDeleteConfirm" class="btn-secondary" style="font-size:12px;">Cancel</button>
+        <button id="btnProceedDeleteConfirm" class="btn-shutter"
+          style="padding:8px 18px; font-size:12px; background:var(--color-error, #BA1A1A);">
+          <span>🗑️</span> Delete Permanently
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="recoveryModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="recoveryTitle">
+    <div class="modal-card recovery-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon" style="color:var(--color-primary);">✦</span>
+          <h3 id="recoveryTitle" class="modal-title">Unfinished Session Found</h3>
+        </div>
+        <button id="btnCloseRecoveryModal" class="modal-close-btn" title="Dismiss">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13.5px; line-height:1.55; color:var(--color-charcoal-main); margin:0 0 8px 0;">
+          We found an unfinished photobooth session from this browser. Would you like to resume where you left off or
+          start fresh?
+        </p>
+        <div class="recovery-snapshot-preview" id="recoverySnapshotPreview">
+          <div class="recovery-snapshot-row">
+            <span class="recovery-snapshot-label">Captured Photos</span>
+            <span class="recovery-snapshot-val" id="recoveryPhotoCount">4 photos</span>
+          </div>
+          <div class="recovery-snapshot-row">
+            <span class="recovery-snapshot-label">Last Saved</span>
+            <span class="recovery-snapshot-val" id="recoveryTimeAgo">Just now</span>
+          </div>
+          <div class="recovery-snapshot-row">
+            <span class="recovery-snapshot-label">Layout Style</span>
+            <span class="recovery-snapshot-val" id="recoveryLayout">Classic Strip</span>
+          </div>
+          <div class="recovery-snapshot-row">
+            <span class="recovery-snapshot-label">Analog Filter</span>
+            <span class="recovery-snapshot-val" id="recoveryFilter">Warm Vintage</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button id="btnDiscardRecovery" class="btn-secondary" style="font-size:12px;">
+          Discard & Start Fresh
+        </button>
+        <button id="btnResumeRecovery" class="btn-shutter" style="padding:8px 20px; font-size:12px;">
+          <span>↺</span> Resume Session
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="projectsModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="projectsTitle">
+    <div class="modal-card" style="max-width: 640px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">📁</span>
+          <h3 id="projectsTitle" class="modal-title">Saved Projects & Backups</h3>
+        </div>
+        <button id="btnCloseProjectsModal" class="modal-close-btn" title="Close (Esc)">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 14px 20px;">
+        <div
+          style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+          <span class="pref-hint" style="margin:0;">Stored locally on this device · Zero cloud upload 🔒</span>
+          <div style="display:flex; gap:8px;">
+            <button id="btnBackupCurrentProject" class="btn-secondary" style="font-size:11px; padding:5px 10px;"
+              title="Export current collage print backup file">
+              <span>💾</span> Export Backup
+            </button>
+            <label class="btn-secondary" style="font-size:11px; padding:5px 10px; cursor:pointer;"
+              title="Restore project from .json or .saycheese backup file">
+              <input type="file" id="importProjectFile" accept=".json,.saycheese,application/json"
+                style="display:none;" />
+              <span>📥 Restore Backup</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+
+        </div>
+
+        <div id="noProjectsMsg"
+          style="display:none; text-align:center; padding:30px 10px; color:var(--color-charcoal-subtle);">
+          <span style="font-size:32px; display:block; margin-bottom:8px;">📁</span>
+          <p style="margin:0; font-size:13px;">No saved projects yet.</p>
+          <span style="font-size:12px; opacity:0.8;">Click "Save Print to Projects" in Collage Studio to save your
+            work!</span>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: flex-end;">
+        <button id="btnDoneProjects" class="btn-shutter" style="padding:8px 20px; font-size:12px;">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="saveProjectModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="saveProjectTitle">
+    <div class="modal-card" style="max-width: 420px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">💾</span>
+          <h3 id="saveProjectTitle" class="modal-title">Save Project Print</h3>
+        </div>
+        <button id="btnCloseSaveProjectModal" class="modal-close-btn" title="Cancel (Esc)">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="pref-label" for="saveProjectNameInput">Project Title</label>
+        <input type="text" id="saveProjectNameInput" class="stamp-input" placeholder="e.g. Birthday Photobooth Strip"
+          maxlength="80" style="width:100%;" />
+        <span class="pref-hint" style="margin-top:6px; display:block;">Saves current photos, collage arrangement,
+          filters, and stickers locally.</span>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button id="btnCancelSaveProject" class="btn-secondary" style="font-size:12px;">Cancel</button>
+        <button id="btnConfirmSaveProject" class="btn-shutter" style="padding:8px 18px; font-size:12px;">
+          <span>✓</span> Save Project
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="exportModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="exportStudioTitle">
+    <div class="modal-card export-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon" style="color:var(--color-primary);">🚀</span>
+          <h3 id="exportStudioTitle" class="modal-title">Export Studio</h3>
+          <span class="pref-badge" id="exportActiveFormatBadge" style="font-size:10px; margin-left:6px;">PNG</span>
+        </div>
+        <button id="btnCloseExportModal" class="modal-close-btn" title="Close Export Studio (Esc)">✕</button>
+      </div>
+
+      <div class="modal-body export-modal-body">
+
+        <div>
+          <span class="pref-hint" style="margin-bottom:6px; display:block;">One-Click Presets:</span>
+          <div class="export-presets-ribbon" id="exportPresetsRibbon">
+            <button class="export-preset-chip" data-preset="quick_share">⚡ Quick Share</button>
+            <button class="export-preset-chip active" data-preset="high_quality">✨ High Quality</button>
+            <button class="export-preset-chip" data-preset="web_social">🌐 Web / Social</button>
+            <button class="export-preset-chip" data-preset="print_ready">🖨️ Print Ready</button>
+          </div>
+        </div>
+
+        <div>
+          <span class="pref-hint" style="margin-bottom:6px; display:block;">Output Format:</span>
+          <div class="export-format-grid" id="exportFormatGrid">
+            <button class="format-pill-btn active" data-format="png">
+              <span class="fmt-name">PNG</span>
+              <span class="fmt-badge">Lossless</span>
+            </button>
+            <button class="format-pill-btn" data-format="jpeg">
+              <span class="fmt-name">JPEG</span>
+              <span class="fmt-badge">Compact</span>
+            </button>
+            <button class="format-pill-btn" data-format="webp">
+              <span class="fmt-name">WebP</span>
+              <span class="fmt-badge">Modern</span>
+            </button>
+            <button class="format-pill-btn" data-format="gif">
+              <span class="fmt-name">GIF</span>
+              <span class="fmt-badge">Animated</span>
+            </button>
+            <button class="format-pill-btn" data-format="webm">
+              <span class="fmt-name">WebM</span>
+              <span class="fmt-badge">Video</span>
+            </button>
+            <button class="format-pill-btn" data-format="mp4">
+              <span class="fmt-name">MP4</span>
+              <span class="fmt-badge">Video</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="export-settings-box">
+
+          <div class="export-control-row">
+            <label class="export-control-label" for="exportResolutionSelect">
+              <span>📐 Resolution</span>
+            </label>
+            <select id="exportResolutionSelect" class="export-control-select">
+              <option value="standard">Standard (0.75× · Fast)</option>
+              <option value="original">Original (1.0× · Studio)</option>
+              <option value="high" selected>High (1.5× · Retina)</option>
+              <option value="ultra">Ultra (2.0× · 300 DPI Print)</option>
+              <option value="custom">Custom Dimensions...</option>
+            </select>
+          </div>
+
+          <div id="exportCustomDimsRow" class="custom-dims-row" style="display:none;">
+            <span style="font-size:11px; font-weight:700;">Width:</span>
+            <input type="number" id="exportCustomWidth" class="dim-input" value="1800" min="100" max="8000" step="10" />
+            <span style="font-size:11px; font-weight:700;">× Height:</span>
+            <input type="number" id="exportCustomHeight" class="dim-input" value="2400" min="100" max="8000"
+              step="10" />
+            <span style="font-size:10.5px; opacity:0.75;">px</span>
+            <button id="btnExportAspectLock" class="btn-aspect-lock locked" title="Lock aspect ratio">🔒 Lock
+              Ratio</button>
+          </div>
+
+          <div id="exportQualityRow" class="export-control-row"
+            style="display:none; flex-direction:column; align-items:flex-start;">
+            <div style="display:flex; justify-content:space-between; width:100%;">
+              <label class="export-control-label" for="exportQualitySlider">
+                <span>🎨 Compression Quality</span>
+              </label>
+              <span id="exportQualityVal"
+                style="font-size:12px; font-weight:700; color:var(--color-primary);">90%</span>
+            </div>
+            <div class="quality-slider-container">
+              <input type="range" id="exportQualitySlider" class="custom-slider" min="0.3" max="1.0" step="0.05"
+                value="0.9" style="width:100%;" />
+              <div class="quality-labels">
+                <span>Low (Compact)</span>
+                <span>Balanced</span>
+                <span>High</span>
+                <span>Maximum (Crisp)</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="exportTransparentBgRow" class="export-control-row">
+            <label class="export-control-label" for="exportTransparentBgCheck" style="cursor:pointer;">
+              <span>🔲 Transparent Frame Background</span>
+            </label>
+            <input type="checkbox" id="exportTransparentBgCheck" style="cursor:pointer; width:16px; height:16px;" />
+          </div>
+
+          <div id="exportAnimatedOptionsRow" class="export-control-row" style="display:none;">
+            <label class="export-control-label">
+              <span>🎞️ Animation Speed & Length</span>
+            </label>
+            <div style="display:flex; gap:8px;">
+              <select id="exportFpsSelect" class="export-control-select">
+                <option value="6">6 FPS (Retro)</option>
+                <option value="10" selected>10 FPS (Balanced)</option>
+                <option value="15">15 FPS (Smooth)</option>
+              </select>
+              <select id="exportDurationSelect" class="export-control-select">
+                <option value="1.5">1.5s Loop</option>
+                <option value="2.5" selected>2.5s Loop</option>
+                <option value="4.0">4.0s Full Loop</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="export-control-row">
+            <label class="export-control-label" for="exportBatchScopeSelect">
+              <span>📦 Content Scope</span>
+            </label>
+            <select id="exportBatchScopeSelect" class="export-control-select">
+              <option value="collage" selected>Collage Print (Composition)</option>
+              <option value="all_photos">All Individual Photos (Filtered Batch)</option>
+            </select>
+          </div>
+
+          <div class="export-control-row" style="flex-direction:column; align-items:flex-start;">
+            <label class="export-control-label" for="exportFilenameInput">
+              <span>🏷️ File Name</span>
+            </label>
+            <div class="filename-group">
+              <input type="text" id="exportFilenameInput" class="filename-input" placeholder="say-cheese-print"
+                maxlength="80" />
+              <span class="filename-ext-badge" id="exportFilenameExtBadge">.png</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="export-summary-card" id="exportSummaryCard">
+          <div class="summary-metric">
+            <span class="metric-label">Dimensions</span>
+            <span class="metric-value" id="exportSummaryDims">1800 × 2400 px</span>
+          </div>
+          <div class="summary-metric">
+            <span class="metric-label">Aspect Ratio</span>
+            <span class="metric-value" id="exportSummaryRatio">3:4 Portrait</span>
+          </div>
+          <div class="summary-metric">
+            <span class="metric-label">Format Type</span>
+            <span class="metric-value" id="exportSummaryFormat">PNG Lossless</span>
+          </div>
+          <div class="summary-metric">
+            <span class="metric-label">Estimated Size</span>
+            <span class="metric-value" id="exportSummarySize" style="color:var(--color-primary-dark);">~3.8 MB</span>
+          </div>
+        </div>
+
+        <div class="export-memory-alert" id="exportMemoryAlert">
+          <span>⚠️</span>
+          <div style="flex:1;">
+            <strong>High Resolution Export:</strong> This output size exceeds 16 megapixels and requires significant
+            device memory.
+          </div>
+        </div>
+
+        <div class="export-progress-container" id="exportProgressContainer">
+          <div class="progress-header">
+            <span id="exportProgressStageText">Preparing export...</span>
+            <span id="exportProgressPercentText">0%</span>
+          </div>
+          <div class="export-progress-bar-track">
+            <div class="export-progress-bar-fill" id="exportProgressBarFill"></div>
+          </div>
+          <button id="btnCancelExportOperation" class="btn-cancel-export">✕ Cancel</button>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; gap:8px;">
+          <button id="btnExportCopyClipboard" class="btn-secondary" style="font-size:12px; padding:8px 14px;"
+            title="Copy PNG image to system clipboard">
+            <span>📋</span> Copy Image
+          </button>
+          <button id="btnExportNativeShare" class="btn-secondary" style="font-size:12px; padding:8px 14px;"
+            title="Share image via native device share sheet">
+            <span>📲</span> Share
+          </button>
+        </div>
+        <button id="btnExportDownloadConfirm" class="btn-shutter"
+          style="padding:8px 24px; font-size:13px; font-weight:800;">
+          <span>💾</span> Download File
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="printModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="printStudioTitle">
+    <div class="modal-card print-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon" style="color:var(--color-primary);">🖨️</span>
+          <h3 id="printStudioTitle" class="modal-title">Print Studio</h3>
+          <span class="pref-badge" id="printActivePaperBadge" style="font-size:10px; margin-left:6px;">4 × 6 in</span>
+          <span class="pref-badge" id="printActiveDpiBadge"
+            style="font-size:10px; margin-left:4px; background:rgba(224,147,122,0.18); color:var(--color-primary-dark);">300
+            DPI</span>
+        </div>
+        <button id="btnClosePrintModal" class="modal-close-btn" title="Close Print Studio (Esc)">✕</button>
+      </div>
+
+      <div class="modal-body print-modal-body">
+
+        <div class="print-preview-pane">
+          <div class="print-paper-shadow-wrap" id="printPaperShadowWrap">
+            <canvas id="printPreviewCanvas" class="print-preview-canvas" width="400" height="600"
+              aria-label="Print sheet visual preview"></canvas>
+          </div>
+
+          <div class="print-guide-toggles">
+            <label class="guide-toggle-chip" for="printGuideSafeCheck" title="Show green dotted margin safe area">
+              <input type="checkbox" id="printGuideSafeCheck" checked style="cursor:pointer;" />
+              <span style="color:#10B981;">● Safe Area</span>
+            </label>
+            <label class="guide-toggle-chip" for="printGuideTrimCheck" title="Show dashed page trim boundary">
+              <input type="checkbox" id="printGuideTrimCheck" checked style="cursor:pointer;" />
+              <span style="color:#C86D51;">- - Trim Edge</span>
+            </label>
+            <label class="guide-toggle-chip" for="printGuideBleedCheck" title="Show red bleed area overlay">
+              <input type="checkbox" id="printGuideBleedCheck" style="cursor:pointer;" />
+              <span style="color:#EF4444;">■ Bleed (3mm)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="print-controls-pane">
+
+          <div>
+            <span class="pref-hint" style="margin-bottom:6px; display:block;">Quick Print Presets:</span>
+            <div class="print-presets-ribbon" id="printPresetsRibbon">
+              <button class="print-preset-chip active" data-preset="photo_lab_4x6">📸 Photo Lab 4×6</button>
+              <button class="print-preset-chip" data-preset="strip_twin_4x6">🎞️ Twin Strips on 4×6</button>
+              <button class="print-preset-chip" data-preset="classic_strip_2x6">🎫 2×6 Strip</button>
+              <button class="print-preset-chip" data-preset="framed_portrait_5x7">🖼️ 5×7 Portrait</button>
+              <button class="print-preset-chip" data-preset="square_memory_4x4">◻️ 4×4 Square</button>
+              <button class="print-preset-chip" data-preset="contact_sheet_8x10">📑 Contact Sheet</button>
+            </div>
+          </div>
+
+          <div class="print-settings-group">
+
+            <div class="print-row">
+              <label class="print-label" for="printPaperSizeSelect">
+                <span>📄 Paper Size</span>
+              </label>
+              <select id="printPaperSizeSelect" class="print-select">
+                <option value="photo_2x3">2 × 3 in (Mini Snap · 51×76mm)</option>
+                <option value="photo_3x4">3 × 4 in (Medium · 76×102mm)</option>
+                <option value="photo_4x6" selected>4 × 6 in (Standard Lab · 10×15cm)</option>
+                <option value="photo_5x7">5 × 7 in (Framed Portrait · 13×18cm)</option>
+                <option value="photo_8x10">8 × 10 in (Large Gallery · 20×25cm)</option>
+                <option value="square_4x4">4 × 4 in (Square Memory)</option>
+                <option value="square_5x5">5 × 5 in (Square Art)</option>
+                <option value="square_6x6">6 × 6 in (Large Square)</option>
+                <option value="strip_2x6">2 × 6 in (Photobooth Strip)</option>
+                <option value="custom">Custom Paper Size...</option>
+              </select>
+            </div>
+
+            <div id="printCustomDimsRow" class="print-custom-dims" style="display:none;">
+              <span style="font-size:11px; font-weight:700;">Width:</span>
+              <input type="number" id="printCustomWidth" class="print-dim-input" value="4.0" min="0.5" max="60"
+                step="0.1" />
+              <span style="font-size:11px; font-weight:700;">× Height:</span>
+              <input type="number" id="printCustomHeight" class="print-dim-input" value="6.0" min="0.5" max="60"
+                step="0.1" />
+              <select id="printCustomUnit" class="print-select" style="padding:3px 6px;">
+                <option value="in" selected>inches (in)</option>
+                <option value="cm">centimeters (cm)</option>
+                <option value="mm">millimeters (mm)</option>
+              </select>
+            </div>
+
+            <div class="print-row">
+              <label class="print-label" for="printDpiSelect">
+                <span>🎯 Print DPI</span>
+              </label>
+              <select id="printDpiSelect" class="print-select">
+                <option value="150">150 DPI (Draft / Fast)</option>
+                <option value="300" selected>300 DPI (Photo Lab · Recommended)</option>
+                <option value="600">600 DPI (Ultra Fine Art)</option>
+              </select>
+            </div>
+
+            <div class="print-row">
+              <label class="print-label" for="printOrientationSelect">
+                <span>🔄 Orientation</span>
+              </label>
+              <select id="printOrientationSelect" class="print-select">
+                <option value="portrait" selected>Portrait</option>
+                <option value="landscape">Landscape</option>
+                <option value="square">Square</option>
+              </select>
+            </div>
+
+            <div class="print-row">
+              <label class="print-label" for="printLayoutModeSelect">
+                <span>📦 Print Mode</span>
+              </label>
+              <select id="printLayoutModeSelect" class="print-select">
+                <option value="single" selected>Single Composition (Current Collage)</option>
+                <option value="multiple_strips">Twin Strips (2 Photobooth Strips on 1 Sheet)</option>
+                <option value="contact_sheet">Contact Sheet (All Raw Photos Grid)</option>
+              </select>
+            </div>
+
+            <div class="print-row" id="printFitModeRow">
+              <label class="print-label" for="printFitModeSelect">
+                <span>📐 Photo Fit</span>
+              </label>
+              <select id="printFitModeSelect" class="print-select">
+                <option value="fill" selected>Fill (Cover Print Area)</option>
+                <option value="fit">Fit (Full Image · No Crop)</option>
+                <option value="crop">Crop (Exact Bounds)</option>
+              </select>
+            </div>
+
+            <div class="print-row">
+              <label class="print-label" for="printMarginSelect">
+                <span>📏 Margins</span>
+              </label>
+              <div style="display:flex; gap:6px;">
+                <select id="printMarginSelect" class="print-select">
+                  <option value="0">Borderless (0 mm)</option>
+                  <option value="3">Small (3 mm)</option>
+                  <option value="6" selected>Standard (6 mm)</option>
+                  <option value="12">Large (12 mm)</option>
+                </select>
+                <select id="printBleedSelect" class="print-select" title="Print Bleed">
+                  <option value="0" selected>Bleed: 0 mm</option>
+                  <option value="2">Bleed: 2 mm</option>
+                  <option value="3">Bleed: 3 mm</option>
+                  <option value="5">Bleed: 5 mm</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="print-row">
+              <label class="print-label" for="printPaperColorSelect">
+                <span>🎨 Paper Color</span>
+              </label>
+              <div style="display:flex; gap:6px;">
+                <select id="printPaperColorSelect" class="print-select">
+                  <option value="#FFFFFF" selected>Pure White</option>
+                  <option value="#FAF6EE">Warm White</option>
+                  <option value="#EFE5D5">Soft Cream</option>
+                  <option value="#F4EFE6">Oatmeal</option>
+                </select>
+                <select id="printBorderStyleSelect" class="print-select" title="Print Border Style">
+                  <option value="none" selected>No Border</option>
+                  <option value="thin">Thin Line</option>
+                  <option value="classic">Classic Mat</option>
+                  <option value="photobooth">Photobooth White</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="print-row">
+              <label class="print-label" for="printCopiesInput">
+                <span>📑 Copies</span>
+              </label>
+              <input type="number" id="printCopiesInput" class="print-dim-input" value="1" min="1" max="20" />
+            </div>
+          </div>
+
+          <div class="print-summary-box" id="printSummaryBox">
+            <div style="display:flex; flex-direction:column;">
+              <span
+                style="font-size:9.5px; text-transform:uppercase; color:var(--color-charcoal-subtle); font-weight:700;">Physical
+                Size</span>
+              <span id="printSummaryPhysical" style="font-weight:700;">4.0 × 6.0 in (102 × 152 mm)</span>
+            </div>
+            <div style="display:flex; flex-direction:column;">
+              <span
+                style="font-size:9.5px; text-transform:uppercase; color:var(--color-charcoal-subtle); font-weight:700;">Raster
+                Resolution</span>
+              <span id="printSummaryPixels" style="font-weight:700;">1200 × 1800 px @ 300 DPI</span>
+            </div>
+            <div style="display:flex; flex-direction:column;">
+              <span
+                style="font-size:9.5px; text-transform:uppercase; color:var(--color-charcoal-subtle); font-weight:700;">Est.
+                Memory</span>
+              <span id="printSummaryMemory" style="font-weight:700; color:var(--color-primary-dark);">~8.2 MB</span>
+            </div>
+          </div>
+
+          <div class="print-warning-banner" id="printQualityWarning">
+            <span>⚠️</span>
+            <div id="printQualityWarningText" style="flex:1;">
+              Photo resolution may appear softer at this physical print size. Recommended: 4 × 6 in.
+            </div>
+          </div>
+
+          <div class="print-warning-banner" id="printMemoryWarning">
+            <span>⚠️</span>
+            <div style="flex:1;">
+              <strong>High Memory Warning:</strong> Selected size exceeds 24 megapixels. 300 DPI is recommended for
+              faster spooling.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="btnPrintSaveFile" class="btn-secondary" style="font-size:12px; padding:8px 14px;"
+            title="Save high-resolution print-ready PNG file">
+            <span>💾</span> Save Print File (PNG)
+          </button>
+          <button id="btnPrintCopyClipboard" class="btn-secondary" style="font-size:12px; padding:8px 14px;"
+            title="Copy print sheet image to clipboard">
+            <span>📋</span> Copy
+          </button>
+          <button id="btnPrintNativeShare" class="btn-secondary" style="font-size:12px; padding:8px 14px;"
+            title="Share print sheet via native device sheet">
+            <span>📲</span> Share
+          </button>
+        </div>
+        <button id="btnPrintExecuteConfirm" class="btn-shutter"
+          style="padding:8px 24px; font-size:13px; font-weight:800; background:linear-gradient(180deg, #E0937A 0%, #C86D51 100%);">
+          <span>🖨️</span> Print Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="printDocumentContainer" aria-hidden="true"></div>
+
+  <div id="privacyToast" class="privacy-toast" aria-live="polite">
+    <span class="privacy-toast-icon" id="privacyToastIcon">🔒</span>
+    <span class="privacy-toast-text" id="privacyToastText">Data updated</span>
+  </div>
+
+  <div id="historyToast" class="history-toast" aria-live="polite"></div>
+
+  <div id="pwaUpdateBanner" class="pwa-update-banner" role="alert" style="display:none;">
+    <div class="pwa-update-content">
+      <span class="pwa-update-icon">✨</span>
+      <div class="pwa-update-text">
+        <strong>Update Ready:</strong> A new version of Say Cheese is available.
+      </div>
+    </div>
+
+    <div id="sessionSummaryModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+      aria-labelledby="sessionSummaryTitle">
+      <div class="modal-card session-summary-card">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <span class="modal-title-icon">🎞️</span>
+            <h3 id="sessionSummaryTitle" class="modal-title">Booth Memory Card</h3>
+          </div>
+          <button id="btnCloseSessionSummary" class="modal-close-btn" title="Close (Esc)">✕</button>
+        </div>
+        <div class="modal-body" id="sessionSummaryBody">
+
+        </div>
+        <div class="modal-footer" style="justify-content: space-between; flex-wrap:wrap; gap:8px;">
+          <button id="btnSummaryStartNew" class="btn-secondary" style="font-size:12px; padding:8px 16px;">
+            <span>📸</span> New Session
+          </button>
+          <button id="btnSummaryGoToCollage" class="btn-shutter"
+            style="padding:8px 22px; font-size:13px; font-weight:800; background:linear-gradient(180deg, #E0937A 0%, #C86D51 100%);">
+            <span>✨</span> Edit Collage
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="errorModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+      aria-labelledby="errorModalTitle" aria-describedby="errorModalDesc">
+      <div class="modal-card error-dialog-card">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <span class="modal-title-icon" id="errorModalIcon">⚠️</span>
+            <h3 id="errorModalTitle" class="modal-title">Something Went Wrong</h3>
+          </div>
+          <button id="btnErrorModalClose" class="modal-close-btn" title="Dismiss error (Esc)">✕</button>
+        </div>
+        <div class="modal-body">
+          <p id="errorModalDesc" class="error-modal-message">An unexpected issue occurred. Your photos and settings are
+            safe in memory.</p>
+          <div id="errorModalTip" class="error-modal-tip" style="display:none;"></div>
+        </div>
+        <div class="modal-footer" style="justify-content: flex-end; gap:8px;">
+          <button id="btnErrorModalSecondary" class="btn-secondary" style="display:none;">Dismiss</button>
+          <button id="btnErrorModalPrimary" class="btn-shutter" style="padding: 8px 22px; font-size: 13px;">Try
+            Again</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="appErrorToast" class="error-toast" aria-live="assertive" style="display:none;">
+      <span class="error-toast-icon">⚠️</span>
+      <span class="error-toast-text" id="appErrorToastText">An issue occurred</span>
+      <button id="btnErrorToastAction" class="error-toast-action" style="display:none;">Retry</button>
+      <button id="btnErrorToastDismiss" class="error-toast-close" title="Dismiss">✕</button>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

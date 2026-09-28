@@ -1,0 +1,289 @@
+.modes-bar-wrapper {
+  width: 100%;
+  background: var(--surface-panel);
+  border: 1px solid var(--surface-panel-border);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-subtle);
+  box-sizing: border-box;
+}
+
+.modes-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modes-bar-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-charcoal-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modes-scroll-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 185px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-subtle) transparent;
+}
+
+.modes-scroll-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modes-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modes-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--color-primary-subtle);
+  border-radius: 4px;
+}
+
+.modes-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+.mode-pill-card {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--surface-card);
+  border: 1.5px solid var(--surface-panel-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(41, 39, 36, 0.04);
+  text-align: left;
+}
+
+.mode-pill-card:hover {
+  border-color: var(--color-primary);
+  background: var(--surface-ground);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+.mode-pill-card.active {
+  background: linear-gradient(180deg, #E0937A 0%, #C86D51 100%);
+  border-color: transparent;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(200, 109, 81, 0.3);
+}
+
+.mode-card-icon {
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mode-card-title {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  color: var(--color-charcoal);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mode-pill-card.active .mode-card-title,
+.mode-pill-card.active .mode-card-icon {
+  color: #FFFFFF;
+}
+
+.mode-energy-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-charcoal-muted);
+  flex-shrink: 0;
+}
+
+.mode-pill-card.active .mode-energy-tag {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+.active-mode-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-primary-subtle);
+  border: 1px solid rgba(200, 109, 81, 0.2);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  font-size: 12px;
+  box-sizing: border-box;
+  animation: fadeIn 0.3s ease;
+}
+
+.active-mode-desc {
+  font-family: var(--font-sans);
+  color: var(--color-charcoal);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.35;
+  font-size: 11.5px;
+}
+
+.active-mode-suggest {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(200, 109, 81, 0.2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.viewfinder-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(43, 37, 34, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  text-transform: uppercase;
+}
+
+.session-summary-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 16px auto;
+  background: var(--surface-panel);
+  border: 1.5px solid var(--surface-panel-border);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  animation: fadeIn 0.3s ease;
+}
+
+.summary-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-icon-bubble {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 1px solid rgba(200, 109, 81, 0.2);
+}
+
+.summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary-mode-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-charcoal);
+}
+
+.summary-mode-stats {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-charcoal-muted);
+}
+
+.summary-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: var(--color-primary-subtle);
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(200, 109, 81, 0.25);
+}
+
+.freeze-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 168, 255, 0.85);
+  color: #FFFFFF;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 30px rgba(0, 168, 255, 0.6);
+  z-index: 25;
+  pointer-events: none;
+  animation: pulseFreeze 0.6s infinite alternate;
+}
+
+@keyframes pulseFreeze {
+  from { transform: translate(-50%, -50%) scale(1); }
+  to { transform: translate(-50%, -50%) scale(1.08); }
+}
+
+@media (max-width: 640px) {
+  .mode-pill-card {
+    padding: 7px 10px;
+  }
+  .mode-card-title {
+    font-size: 12px;
+  }
+  .session-summary-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
